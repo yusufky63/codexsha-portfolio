@@ -81,24 +81,6 @@ button {
   -webkit-line-clamp: 3;
 }
 
-.activity-scroll {
-  scrollbar-color: #3a3a3a #171717;
-  scrollbar-width: thin;
-}
-
-.activity-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.activity-scroll::-webkit-scrollbar-track {
-  background: #171717;
-}
-
-.activity-scroll::-webkit-scrollbar-thumb {
-  background: #3a3a3a;
-  border-radius: 999px;
-}
-
 @keyframes split-rise {
   from {
     opacity: 0;

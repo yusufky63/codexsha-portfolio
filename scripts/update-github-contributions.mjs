@@ -26,14 +26,11 @@ if (!token) {
   throw new Error("Missing GITHUB_TOKEN and gh auth token is unavailable.");
 }
 
-const to = new Date();
-const from = new Date(to);
-from.setUTCDate(from.getUTCDate() - 371);
-
 const query = `
   query ContributionCalendar($login: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $login) {
       login
+      createdAt
       contributionsCollection(from: $from, to: $to) {
         restrictedContributionsCount
         contributionCalendar {
@@ -52,36 +49,44 @@ const query = `
   }
 `;
 
-const response = await fetch("https://api.github.com/graphql", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    query,
-    variables: {
-      login,
-      from: from.toISOString(),
-      to: to.toISOString(),
-    },
-  }),
-});
+const to = new Date();
+const from = new Date(to);
+from.setUTCDate(from.getUTCDate() - 371);
 
-const payload = await response.json();
-
-if (!response.ok || payload.errors?.length) {
-  throw new Error(JSON.stringify(payload.errors || payload, null, 2));
-}
-
-const collection = payload.data.user.contributionsCollection;
+const recentPayload = await fetchContributionRange(from, to);
+const user = recentPayload.data.user;
+const collection = user.contributionsCollection;
 const calendar = collection.contributionCalendar;
 const days = calendar.weeks.flatMap((week) => week.contributionDays);
 const activeDays = days.filter((day) => day.contributionCount > 0).length;
 const longestStreak = getLongestStreak(days);
+const createdYear = new Date(user.createdAt).getUTCFullYear();
+const currentYear = to.getUTCFullYear();
+const yearly = [];
+
+for (let year = createdYear; year <= currentYear; year += 1) {
+  const yearFrom = new Date(Date.UTC(year, 0, 1));
+  const yearTo =
+    year === currentYear ? to : new Date(Date.UTC(year, 11, 31, 23, 59, 59));
+  const payload = await fetchContributionRange(yearFrom, yearTo);
+  const yearCollection = payload.data.user.contributionsCollection;
+  const yearCalendar = yearCollection.contributionCalendar;
+  const yearDays = yearCalendar.weeks.flatMap((week) => week.contributionDays);
+
+  yearly.push({
+    year,
+    from: yearFrom.toISOString().slice(0, 10),
+    to: yearTo.toISOString().slice(0, 10),
+    totalContributions: yearCalendar.totalContributions,
+    restrictedContributionsCount: yearCollection.restrictedContributionsCount,
+    activeDays: yearDays.filter((day) => day.contributionCount > 0).length,
+    longestStreak: getLongestStreak(yearDays),
+    weeks: yearCalendar.weeks,
+  });
+}
 
 const data = {
-  login: payload.data.user.login,
+  login: user.login,
   updatedAt: to.toISOString(),
   from: from.toISOString().slice(0, 10),
   to: to.toISOString().slice(0, 10),
@@ -89,6 +94,7 @@ const data = {
   restrictedContributionsCount: collection.restrictedContributionsCount,
   activeDays,
   longestStreak,
+  yearly,
   weeks: calendar.weeks,
 };
 
@@ -112,4 +118,30 @@ function getLongestStreak(days) {
   }
 
   return longest;
+}
+
+async function fetchContributionRange(fromDate, toDate) {
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables: {
+        login,
+        from: fromDate.toISOString(),
+        to: toDate.toISOString(),
+      },
+    }),
+  });
+
+  const payload = await response.json();
+
+  if (!response.ok || payload.errors?.length) {
+    throw new Error(JSON.stringify(payload.errors || payload, null, 2));
+  }
+
+  return payload;
 }
