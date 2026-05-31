@@ -96,8 +96,7 @@ Stack:
 Links:
 
 - Main product: https://zkcodex.com
-- GitHub org: https://github.com/zkcodex
-- Intro repo: https://github.com/zkcodex/Introduction-zkCodex
+- Public intro repo: https://github.com/zkcodex/Introduction-zkCodex
 
 Portfolio treatment:
 
@@ -129,7 +128,7 @@ Stack:
 
 Live link:
 
-> https://baseplaygame.vercel.app
+> https://baseplay.games
 
 Portfolio treatment:
 
@@ -496,4 +495,3 @@ The UI can be built from these content blocks:
 The site should not look like a repo directory. It should look like a product builder profile with a clear hierarchy:
 
 > Founder platforms first, shipped products second, mini app ecosystem third, tooling and experiments last.
-

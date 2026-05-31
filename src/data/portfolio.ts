@@ -52,10 +52,10 @@ export const socialLinks: ProjectLink[] = [
 ];
 
 export const stats: Stat[] = [
-  { label: "repositories", value: 69 },
+  { label: "repositories", value: 70 },
   { label: "private builds", value: 23 },
-  { label: "own projects", value: 52 },
-  { label: "public repos", value: 46 }
+  { label: "own projects", value: 53 },
+  { label: "public repos", value: 47 }
 ];
 
 export const featuredProjects: Project[] = [
@@ -95,7 +95,7 @@ export const featuredProjects: Project[] = [
     ],
     links: [
       { label: "Live", href: "https://zkcodex.com" },
-      { label: "GitHub", href: "https://github.com/zkcodex" }
+      { label: "GitHub", href: "https://github.com/zkcodex/Introduction-zkCodex" }
     ],
     status: "Live platform with private app, public intro repository, API services, and Farcaster mini app work.",
     role: "Founder and product builder across product direction, frontend, backend APIs, wallet analytics flows, and deployment.",
@@ -214,7 +214,7 @@ export const featuredProjects: Project[] = [
       { label: "Live", href: "https://abonely-web.vercel.app" },
       {
         label: "App Store",
-        href: "https://apps.apple.com/tr/app/abonely-abonelik-takibi/id6762087754?l"
+        href: "https://apps.apple.com/tr/app/abonely-subscription-tracker/id6762087754"
       }
     ],
     status: "Private mobile app repository with companion web deployment.",
