@@ -7,3 +7,5 @@ dist
 .env*
 !.env.example
 .playwright-cli
+
+.vercel
