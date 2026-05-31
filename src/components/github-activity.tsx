@@ -52,7 +52,12 @@ export function GitHubActivity() {
         weeks: contributionData.weeks
       },
       ...contributionData.yearly
-        .filter((year) => year.totalContributions > 0 && year.year >= 2022)
+        .filter(
+          (year) =>
+            year.totalContributions > 0 &&
+            year.year >= 2022 &&
+            year.year < new Date().getFullYear()
+        )
         .slice()
         .reverse()
         .map((year) => ({
