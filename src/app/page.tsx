@@ -181,37 +181,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <footer className="mt-8 flex flex-col gap-3 border-t border-[#2a2a2a] py-6 text-[12px] text-[#737373] md:flex-row md:items-center md:justify-between">
+        <footer className="mt-8 border-t border-[#2a2a2a] py-6 text-[12px] text-[#737373]">
           <p>Codexsha / Yusuf. Quiet product index for shipped Web3 and mobile work.</p>
-          <div className="flex flex-wrap gap-2">
-            <a
-              className="inline-flex items-center gap-1.5 rounded-md border border-[#2a2a2a] px-2.5 py-1 transition-colors hover:border-[#444] hover:text-[#d6d6d6]"
-              href="https://github.com/yusufky63"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <GitHubMark className="size-3" />
-              GitHub
-            </a>
-            <a
-              className="inline-flex items-center gap-1.5 rounded-md border border-[#2a2a2a] px-2.5 py-1 transition-colors hover:border-[#444] hover:text-[#d6d6d6]"
-              href="https://t.me/codexsha"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <TelegramMark className="size-3" />
-              Telegram
-            </a>
-            <a
-              className="inline-flex items-center gap-1.5 rounded-md border border-[#2a2a2a] px-2.5 py-1 transition-colors hover:border-[#444] hover:text-[#d6d6d6]"
-              href="https://x.com/codexsha"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <XMark className="size-3" />
-              X
-            </a>
-          </div>
         </footer>
       </div>
     </main>
