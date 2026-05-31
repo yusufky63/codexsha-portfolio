@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "update:github-contributions": "node scripts/update-github-contributions.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.17.0",

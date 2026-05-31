@@ -10,6 +10,7 @@ import { CapabilitiesPanel } from "@/components/capabilities-panel";
 import { CountUp } from "@/components/effects/count-up";
 import { SplitText } from "@/components/effects/split-text";
 import { CompactCard } from "@/components/compact-card";
+import { GitHubActivity } from "@/components/github-activity";
 import { LogoLoop } from "@/components/logo-loop";
 import { ProjectRow } from "@/components/project-row";
 import { GitHubMark, TelegramMark, XMark } from "@/components/social-icons";
@@ -68,6 +69,8 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        <GitHubActivity />
 
         <section className="py-10" id="projects">
           <SectionHeading
