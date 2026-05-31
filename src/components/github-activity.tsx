@@ -55,8 +55,7 @@ export function GitHubActivity() {
         .filter(
           (year) =>
             year.totalContributions > 0 &&
-            year.year >= 2022 &&
-            year.year < new Date().getFullYear()
+            year.year >= 2022
         )
         .slice()
         .reverse()
@@ -97,8 +96,7 @@ export function GitHubActivity() {
                 GitHub Activity
               </h2>
               <p className="mt-0.5 text-[12px] text-[#7d7d7d]">
-                Public-safe activity for @{contributionData.login}. Private work
-                is counted only as totals.
+                Contribution calendar for @{contributionData.login}.
               </p>
             </div>
           </div>
@@ -148,14 +146,10 @@ export function GitHubActivity() {
 
         <div className="px-4 py-4">
           <ContributionGrid weeks={selectedRange.weeks} />
-          <div className="mt-4 grid grid-cols-2 overflow-hidden rounded-md border border-[#252525] bg-[#181818] md:grid-cols-4">
+          <div className="mt-4 grid grid-cols-3 overflow-hidden rounded-md border border-[#252525] bg-[#181818]">
             <ActivityStat
               label="contributions"
               value={selectedRange.totalContributions}
-            />
-            <ActivityStat
-              label="private counted"
-              value={selectedRange.restrictedContributionsCount}
             />
             <ActivityStat label="active days" value={selectedRange.activeDays} />
             <ActivityStat
@@ -174,23 +168,15 @@ export function GitHubActivity() {
 }
 
 function ContributionGrid({ weeks }: { weeks: ContributionWeek[] }) {
-  const visibleWeeks = weeks
-    .map((week) => ({
-      contributionDays: week.contributionDays.filter(
-        (day) => new Date(`${day.date}T00:00:00Z`) <= new Date()
-      )
-    }))
-    .filter((week) => week.contributionDays.length > 0);
-
   return (
     <div className="self-start">
       <div
         className="grid gap-[3px]"
         style={{
-          gridTemplateColumns: `repeat(${visibleWeeks.length}, minmax(0, 1fr))`
+          gridTemplateColumns: `repeat(${weeks.length}, minmax(0, 1fr))`
         }}
       >
-        {visibleWeeks.map((week, weekIndex) => (
+        {weeks.map((week, weekIndex) => (
           <div className="grid grid-rows-7 gap-[3px]" key={weekIndex}>
             {week.contributionDays.map((day) => (
               <span
@@ -212,7 +198,7 @@ function ContributionGrid({ weeks }: { weeks: ContributionWeek[] }) {
 
 function ActivityStat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="border-b border-r border-[#242424] p-3 even:border-r-0 md:border-b-0 md:even:border-r md:last:border-r-0">
+    <div className="border-r border-[#242424] p-3 last:border-r-0">
       <p className="font-mono text-xl text-[#e6e6e6]">{value}</p>
       <p className="mt-1 text-[11px] text-[#7d7d7d]">{label}</p>
     </div>

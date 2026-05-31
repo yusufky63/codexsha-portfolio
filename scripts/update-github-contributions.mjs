@@ -66,8 +66,7 @@ const yearly = [];
 
 for (let year = createdYear; year <= currentYear; year += 1) {
   const yearFrom = new Date(Date.UTC(year, 0, 1));
-  const yearTo =
-    year === currentYear ? to : new Date(Date.UTC(year, 11, 31, 23, 59, 59));
+  const yearTo = new Date(Date.UTC(year, 11, 31, 23, 59, 59));
   const payload = await fetchContributionRange(yearFrom, yearTo);
   const yearCollection = payload.data.user.contributionsCollection;
   const yearCalendar = yearCollection.contributionCalendar;
