@@ -4,6 +4,7 @@ import {
   siChartdotjs,
   siCircle,
   siCoinbase,
+  siDeepseek,
   siElevenlabs,
   siEthers,
   siExpress,
@@ -41,7 +42,8 @@ import {
   siVercel,
   siWagmi,
   siWalletconnect,
-  siWeb3dotjs
+  siWeb3dotjs,
+  siZod
 } from "simple-icons";
 
 const iconPaths: Record<string, string> = {
@@ -94,7 +96,9 @@ const iconPaths: Record<string, string> = {
   IPFS: siIpfs.path,
   JavaScript: siJavascript.path,
   Swagger: siSwagger.path,
-  Tldraw: siTldraw.path
+  Tldraw: siTldraw.path,
+  DeepSeek: siDeepseek.path,
+  Zod: siZod.path
 };
 
 function CustomTechIcon({ label }: { label: string }) {
@@ -174,6 +178,15 @@ function CustomTechIcon({ label }: { label: string }) {
       <svg aria-hidden="true" className="size-3.5" fill="none" viewBox="0 0 24 24">
         <path d="M6 9c0-2 2.7-4 6-4s6 2 6 4v6c0 2-2.7 4-6 4s-6-2-6-4z" stroke="currentColor" strokeWidth="1.7" />
         <path d="M6 9c0 2 2.7 4 6 4s6-2 6-4" stroke="currentColor" strokeWidth="1.7" />
+      </svg>
+    );
+  }
+
+  if (label === "OpenAI" || label === "Browser TTS") {
+    return (
+      <svg aria-hidden="true" className="size-3.5" fill="none" viewBox="0 0 24 24">
+        <path d="M12 4a4 4 0 0 1 4 4v3a4 4 0 0 1-8 0V8a4 4 0 0 1 4-4Z" stroke="currentColor" strokeWidth="1.7" />
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6" stroke="currentColor" strokeLinecap="round" strokeWidth="1.7" />
       </svg>
     );
   }

@@ -6,12 +6,12 @@ import {
   Coins,
   Gamepad2,
   Grid3X3,
+  Languages,
   Palette,
   Rocket,
   Send,
   ShieldOff,
   Smartphone,
-  UploadCloud,
   WandSparkles
 } from "lucide-react";
 
@@ -27,7 +27,7 @@ const projectLogos: Record<string, string> = {
   frevoke: "/project-icons/frevoke.png",
   "cosmic-raid": "/project-icons/cosmic-raid.png",
   "visionz-ai": "/project-icons/visionz-ai.png",
-  "oneclick-deployer": "/project-icons/oneclick-deployer.png"
+  lexoraft: "/project-icons/lexoraft.svg"
 };
 
 const projectIcons = {
@@ -42,8 +42,8 @@ const projectIcons = {
   frevoke: ShieldOff,
   "cosmic-raid": Rocket,
   "visionz-ai": WandSparkles,
-  "youtube-shorts-pipeline": Clapperboard,
-  "oneclick-deployer": UploadCloud
+  lexoraft: Languages,
+  "youtube-shorts-pipeline": Clapperboard
 };
 
 type ProjectIconBadgeProps = {

@@ -53,9 +53,9 @@ export const socialLinks: ProjectLink[] = [
 
 export const stats: Stat[] = [
   { label: "repositories", value: 70 },
-  { label: "private builds", value: 23 },
+  { label: "private builds", value: 22 },
   { label: "own projects", value: 53 },
-  { label: "public repos", value: 47 }
+  { label: "public repos", value: 31 }
 ];
 
 export const featuredProjects: Project[] = [
@@ -449,8 +449,42 @@ export const tools: CompactProject[] = [
       "Next.js application with Zora SDK, Supabase, Hugging Face, Wagmi, Ethers, and trading/discovery UI modules."
   },
   {
-    slug: "youtube-shorts-pipeline",
+    slug: "lexoraft",
     index: "12",
+    title: "Lexoraft",
+    category: "AI Learning App",
+    description:
+      "English/Turkish learning app with vocabulary cards, practice flows, quiz review, AI translation, and writing feedback.",
+    features: [
+      "Vocabulary cards with examples and Turkish translations",
+      "Practice center for mistakes, grammar, speaking, writing, and listening",
+      "AI translation coach with grammar notes and recall prompts",
+      "Progress, favorites, quiz misses, drafts, and provider settings",
+      "Controlled AI content generation with validation and duplicate reduction"
+    ],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Zod",
+      "DeepSeek",
+      "OpenAI",
+      "Browser TTS",
+      "Vercel"
+    ],
+    links: [
+      { label: "Live", href: "https://english-learning-ai.vercel.app" },
+      { label: "GitHub", href: "https://github.com/yusufky63/english-learning" }
+    ],
+    status: "Public repository and live deployment.",
+    role: "Built the learning workspace, progress model, AI provider settings, practice flows, and production deployment.",
+    architecture:
+      "Next.js App Router application with browser-local persistence, server AI provider adapters, Zod validation, security checks, rate limits, and browser speech/TTS flows."
+  },
+  {
+    slug: "youtube-shorts-pipeline",
+    index: "13",
     title: "YouTube Shorts Pipeline",
     category: "AI Media Automation",
     description:
@@ -472,39 +506,6 @@ export const tools: CompactProject[] = [
     role: "Built the video processing workflow, AI narration path, subtitle pipeline, and render automation.",
     architecture:
       "Python and Streamlit tool that coordinates Gemini analysis, ElevenLabs TTS, subtitle generation, and FFmpeg rendering."
-  },
-  {
-    slug: "oneclick-deployer",
-    index: "13",
-    title: "OneClick Deployer",
-    category: "Smart Contract Deployment",
-    description:
-      "No-code smart contract deployment tool for launching ERC-20 tokens, ERC-721 NFTs, and simple contracts across chains.",
-    features: [
-      "No-code ERC-20 and ERC-721 deployment",
-      "Multi-chain wallet connection",
-      "Deployment history and statistics",
-      "Shareable contract launch flow"
-    ],
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Ethers",
-      "Wagmi",
-      "Viem",
-      "Supabase",
-      "ConnectKit",
-      "Radix UI",
-      "Web3.js"
-    ],
-    links: [
-      { label: "Live", href: "https://oneclickdeploy-flame.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/oneclickdeploy" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the no-code deployment interface, wallet flow, contract configuration UI, and deployment tracking surface.",
-    architecture:
-      "Next.js and TypeScript app with Ethers, Wagmi, ConnectKit, Supabase, and contract deployment flows."
   }
 ];
 
