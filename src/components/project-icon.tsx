@@ -26,6 +26,7 @@ const projectLogos: Record<string, string> = {
   "base-counter": "/project-icons/base-counter.png",
   frevoke: "/project-icons/frevoke.png",
   "cosmic-raid": "/project-icons/cosmic-raid.png",
+  cellforge: "/project-icons/cellforge.svg",
   "visionz-ai": "/project-icons/visionz-ai.png",
   lexoraft: "/project-icons/lexoraft.svg"
 };
@@ -41,6 +42,7 @@ const projectIcons = {
   "base-counter": Coins,
   frevoke: ShieldOff,
   "cosmic-raid": Rocket,
+  cellforge: Grid3X3,
   "visionz-ai": WandSparkles,
   lexoraft: Languages,
   "youtube-shorts-pipeline": Clapperboard

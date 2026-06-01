@@ -11,7 +11,7 @@ import {
 export const metadata: Metadata = {
   title: "Projects - Codexsha",
   description:
-    "All visible Codexsha projects across Web3 products, Farcaster mini apps, AI tools, and automation."
+    "All visible Codexsha projects across Web3 products, Farcaster mini apps, AI tools, UI libraries, and automation."
 };
 
 const projectGroups = [
@@ -31,9 +31,9 @@ const projectGroups = [
   },
   {
     eyebrow: "03 / Tools",
-    title: "AI & Automation",
+    title: "AI & Tooling",
     description:
-      "AI, deployment, and media automation tools supporting the wider builder profile.",
+      "AI apps, open-source UI tooling, and media automation supporting the wider builder profile.",
     projects: tools
   }
 ].filter((group) => group.projects.length > 0);

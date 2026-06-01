@@ -415,8 +415,42 @@ export const miniApps: CompactProject[] = [
 
 export const tools: CompactProject[] = [
   {
-    slug: "visionz-ai",
+    slug: "cellforge",
     index: "11",
+    title: "CellForge",
+    category: "Open Source UI Library",
+    description:
+      "Open-source React loader system with animated cell-based primitives, a live tuning studio, shadcn-style registry, and npm runtime package.",
+    features: [
+      "71 installable loader items generated from a local registry",
+      "Gallery for loader families and quick install commands",
+      "Studio for tuning color, shape, pattern, size, speed, padding, frames, and generated code",
+      "shadcn-style source registry for editable component installs",
+      "npm runtime package with reduced-motion handling and CSS-only animation paths"
+    ],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "shadcn/ui",
+      "Framer Motion",
+      "Vitest",
+      "npm",
+      "Vercel"
+    ],
+    links: [
+      { label: "Live", href: "https://cellforge.dev" },
+      { label: "GitHub", href: "https://github.com/cellforge-dev/cellforge" }
+    ],
+    status: "Public organization repository, live documentation site, registry, and npm package.",
+    role: "Built the loader primitive system, public docs, tuning studio, registry generation workflow, package distribution, and validation pipeline.",
+    architecture:
+      "Next.js site with docs, gallery, studio, playground, generated shadcn registry files, source loader primitives, package build output, Vitest coverage, and consumer smoke checks."
+  },
+  {
+    slug: "visionz-ai",
+    index: "12",
     title: "VisionZ AI",
     category: "AI + Web3 Tooling",
     description:
@@ -450,7 +484,7 @@ export const tools: CompactProject[] = [
   },
   {
     slug: "lexoraft",
-    index: "12",
+    index: "13",
     title: "Lexoraft",
     category: "AI Learning App",
     description:
@@ -484,7 +518,7 @@ export const tools: CompactProject[] = [
   },
   {
     slug: "youtube-shorts-pipeline",
-    index: "13",
+    index: "14",
     title: "YouTube Shorts Pipeline",
     category: "AI Media Automation",
     description:

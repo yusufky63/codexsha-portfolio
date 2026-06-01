@@ -29,6 +29,7 @@ import {
   siRedux,
   siReplicate,
   siSentry,
+  siShadcnui,
   siSocketdotio,
   siSolidity,
   siStreamlit,
@@ -40,6 +41,7 @@ import {
   siTypescript,
   siUpstash,
   siVercel,
+  siVitest,
   siWagmi,
   siWalletconnect,
   siWeb3dotjs,
@@ -98,7 +100,9 @@ const iconPaths: Record<string, string> = {
   Swagger: siSwagger.path,
   Tldraw: siTldraw.path,
   DeepSeek: siDeepseek.path,
-  Zod: siZod.path
+  Zod: siZod.path,
+  "shadcn/ui": siShadcnui.path,
+  Vitest: siVitest.path
 };
 
 function CustomTechIcon({ label }: { label: string }) {

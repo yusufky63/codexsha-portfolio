@@ -100,9 +100,9 @@ export default function Home() {
 
         <section className="py-10">
           <SectionHeading
-            description="AI, contract deployment, and media automation work that supports the wider product-builder profile."
+            description="AI apps, open-source UI tooling, and media automation work that supports the wider product-builder profile."
             eyebrow="03 / Tools"
-            title="AI & Automation"
+            title="AI & Tooling"
           />
           <div className="grid gap-3 md:grid-cols-3">
             {tools.map((project) => (
