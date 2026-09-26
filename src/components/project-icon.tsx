@@ -6,7 +6,6 @@ import {
   BarChart3,
   Bot,
   ChartCandlestick,
-  Clapperboard,
   Coins,
   Fingerprint,
   Gamepad2,
@@ -80,8 +79,7 @@ const projectIcons: Record<string, LucideIcon> = {
   "cosmic-raid": Rocket,
   cellforge: Grid3X3,
   "visionz-ai": WandSparkles,
-  lexoraft: Languages,
-  "youtube-shorts-pipeline": Clapperboard
+  lexoraft: Languages
 };
 
 type ProjectIconBadgeProps = {

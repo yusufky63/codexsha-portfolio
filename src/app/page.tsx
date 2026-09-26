@@ -18,7 +18,7 @@ import { GitHubMark, TelegramMark, XMark } from "@/components/social-icons";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { capabilities, projectGroups, stats } from "@/data/portfolio";
+import { capabilities, homepageGroups, stats } from "@/data/portfolio";
 
 const contactHighlights: Array<[label: string, icon: LucideIcon]> = [
   ["Product systems", Boxes],
@@ -43,7 +43,7 @@ export default function Home() {
             />
             <BlurText
               className="mt-4 max-w-2xl text-[15px] leading-7 text-[#a1a1a1]"
-              text="I build Base DeFi interfaces, token launchpads, testnet routing infrastructure, wallet analytics, on-chain games, AI agent tooling, and mobile consumer apps with full-stack product ownership."
+              text="I build wallet analytics, Base DeFi interfaces, token launchpads, testnet routing infrastructure, on-chain games, AI agent tooling, and mobile consumer apps with full-stack product ownership."
             />
             <div className="mt-5 flex flex-wrap gap-2">
               <Button href="/projects" variant="primary">
@@ -73,7 +73,7 @@ export default function Home() {
 
         <GitHubActivity />
 
-        {projectGroups.map((group) => (
+        {homepageGroups.map((group) => (
           <section
             className={group.layout === "rows" ? "py-10" : "py-6"}
             id={group.id}

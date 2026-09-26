@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Codexsha - Web3 Product Builder",
   description:
-    "Minimal portfolio for Codexsha: Base DeFi interfaces, token launchpads, testnet routing infrastructure, wallet analytics, on-chain games, AI agent tooling, and mobile products.",
+    "Minimal portfolio for Codexsha: wallet analytics, Base DeFi interfaces, token launchpads, testnet routing infrastructure, on-chain games, AI agent tooling, and mobile products.",
   metadataBase: new URL("https://codexsha.dev"),
   openGraph: {
     title: "Codexsha - Web3 Product Builder",

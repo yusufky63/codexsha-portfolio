@@ -18,6 +18,8 @@ export type Project = {
   role: string;
   architecture: string;
   privateNote?: string;
+  /** Set to false to keep a project in the /projects index only. */
+  homepage?: boolean;
 };
 
 export type ProjectGroup = {
@@ -56,9 +58,52 @@ export const stats: Stat[] = [
 
 export const featuredProjects: Project[] = [
   {
+    slug: "zkcodex",
+    title: "zkCodex",
+    index: "01",
+    category: "Founder Project / Wallet Analytics",
+    summary:
+      "Multi-chain wallet analytics and DeFi tools platform for understanding wallet activity, portfolio behavior, and on-chain opportunities.",
+    description:
+      "zkCodex helps users analyze wallet activity across EVM networks, inspect transaction history, track asset behavior, discover airdrop-style opportunities, and use contract interaction tools from one product surface.",
+    features: [
+      "Wallet analytics across 35+ EVM networks",
+      "Wallet scoring, transaction activity, and asset overview",
+      "Airdrop opportunity discovery and eligibility-style tracking",
+      "Stats API for transaction, DeFi, NFT, and scoring data",
+      "Farcaster Mini App for mobile-first wallet checks"
+    ],
+    stack: [
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Wagmi",
+      "Viem",
+      "Ethers",
+      "RainbowKit",
+      "Reown AppKit",
+      "Express",
+      "Firebase",
+      "Chart.js",
+      "Redux",
+      "Three.js",
+      "Circle",
+      "Li.Fi",
+      "Vercel"
+    ],
+    links: [
+      { label: "Live", href: "https://zkcodex.com" },
+      { label: "GitHub", href: "https://github.com/zkcodex/Introduction-zkCodex" }
+    ],
+    status: "Live platform with private app, public intro repository, API services, and Farcaster mini app work.",
+    role: "Founder and product builder across product direction, frontend, backend APIs, wallet analytics flows, and deployment.",
+    architecture:
+      "Main React application, dedicated wallet statistics API, Farcaster mini app surface, wallet connection layer, and external on-chain data integrations."
+  },
+  {
     slug: "bstocks",
     title: "BStocks",
-    index: "01",
+    index: "02",
     category: "Base DeFi / Tokenized Stocks",
     summary:
       "Self-custodial interface for Coinbase Tokenized Stocks on Base: live markets, best-route trading across DEX aggregators, baskets, auto-invest, yield, gifting, and a fenced AI assistant.",
@@ -102,7 +147,7 @@ export const featuredProjects: Project[] = [
   {
     slug: "bstocks-launchpad",
     title: "BStocks Launchpad",
-    index: "02",
+    index: "03",
     category: "Base / Token Launchpad / Uniswap v4",
     summary:
       "Stock-paired token launcher on Base: one transaction creates a zero-admin B20 token and opens a permanently locked Uniswap v4 pool against a Coinbase tokenized stock.",
@@ -143,92 +188,9 @@ export const featuredProjects: Project[] = [
       "pnpm monorepo: Foundry contracts (StockPairFactory, StockPairHook, StockPairRouter) with invariant tests, a shared core package with ABIs, stock registry and price math, a Base log indexer writing to Postgres, and a Next.js web app."
   },
   {
-    slug: "routedust",
-    title: "RouteDust",
-    index: "03",
-    category: "Testnet Infrastructure / Cross-chain Router",
-    summary:
-      "Multi-chain testnet asset router and dust consolidator: scans a wallet across 20 testnets, quotes and simulates every swap and bridge path, and consolidates balances into the chain and asset you choose.",
-    description:
-      "RouteDust discovers live swap and bridge capabilities at runtime instead of hardcoding them: Circle CCTP and Gateway, Uniswap v2, v3 and v4, Hyperlane warp routes, Stargate V2, Across, LI.FI intents and OP Standard Bridge deposits. It reserves source gas, scores and splits routes, handles partial fills, and executes everything from the user's own wallet with no backend and no custody.",
-    features: [
-      "Wallet scan and route planning across 20 EVM testnets, with watch mode for any address",
-      "Runtime capability discovery across Circle CCTP and Gateway, Uniswap v2/v3/v4, Hyperlane, Stargate V2, Across, LI.FI and OP Standard Bridge",
-      "Gas reserve, price-impact limits, split routes, multi-hop detours and PARTIAL plans when liquidity caps out",
-      "Resumable route and batch timelines with permanent history and on-chain CCTP burn recovery",
-      "Networks, protocols, coverage, faucets and liquidity pages backed by an on-chain probe and a provenance-stamped registry"
-    ],
-    stack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind",
-      "Viem",
-      "Wagmi",
-      "Circle CCTP",
-      "Uniswap",
-      "Li.Fi",
-      "Zustand",
-      "TanStack Query",
-      "Vitest",
-      "Vercel"
-    ],
-    links: [
-      { label: "Live", href: "https://routedust.xyz" },
-      { label: "GitHub", href: "https://github.com/yusufky63/routedust" }
-    ],
-    status: "Public monorepo and live deployment, verified live against 20 testnets.",
-    role: "Built the capability graph, planner and execution engine, protocol adapters, registry and probe tooling, and the web app.",
-    architecture:
-      "pnpm monorepo with a core planning and execution engine, a registry of chains, assets and deployments with bytecode provenance, one adapter per protocol, CLI probe and discovery scripts, and a Next.js App Router UI."
-  },
-  {
-    slug: "zkcodex",
-    title: "zkCodex",
-    index: "04",
-    category: "Founder Project / Wallet Analytics",
-    summary:
-      "Multi-chain wallet analytics and DeFi tools platform for understanding wallet activity, portfolio behavior, and on-chain opportunities.",
-    description:
-      "zkCodex helps users analyze wallet activity across EVM networks, inspect transaction history, track asset behavior, discover airdrop-style opportunities, and use contract interaction tools from one product surface.",
-    features: [
-      "Wallet analytics across 35+ EVM networks",
-      "Wallet scoring, transaction activity, and asset overview",
-      "Airdrop opportunity discovery and eligibility-style tracking",
-      "Stats API for transaction, DeFi, NFT, and scoring data",
-      "Farcaster Mini App for mobile-first wallet checks"
-    ],
-    stack: [
-      "React",
-      "TypeScript",
-      "Tailwind",
-      "Wagmi",
-      "Viem",
-      "Ethers",
-      "RainbowKit",
-      "Reown AppKit",
-      "Express",
-      "Firebase",
-      "Chart.js",
-      "Redux",
-      "Three.js",
-      "Circle",
-      "Li.Fi",
-      "Vercel"
-    ],
-    links: [
-      { label: "Live", href: "https://zkcodex.com" },
-      { label: "GitHub", href: "https://github.com/zkcodex/Introduction-zkCodex" }
-    ],
-    status: "Live platform with private app, public intro repository, API services, and Farcaster mini app work.",
-    role: "Founder and product builder across product direction, frontend, backend APIs, wallet analytics flows, and deployment.",
-    architecture:
-      "Main React application, dedicated wallet statistics API, Farcaster mini app surface, wallet connection layer, and external on-chain data integrations."
-  },
-  {
     slug: "baseplay",
     title: "BasePlay",
-    index: "05",
+    index: "04",
     category: "On-chain Gaming / Base Mainnet",
     summary:
       "Base-native on-chain gaming platform with 16 provably fair mini games, real ETH stakes, instant payouts, Chainlink VRF randomness and admin tooling.",
@@ -272,7 +234,7 @@ export const featuredProjects: Project[] = [
   {
     slug: "drawcoin",
     title: "DrawCoin",
-    index: "06",
+    index: "05",
     category: "AI + Creator Economy / Base",
     summary:
       "Create and trade art-backed coins on Base using hand-drawn artwork or AI-generated visuals in a Farcaster-ready product flow.",
@@ -312,7 +274,7 @@ export const featuredProjects: Project[] = [
   {
     slug: "abonely",
     title: "Abonely",
-    index: "07",
+    index: "06",
     category: "Mobile App / Consumer SaaS",
     summary:
       "Privacy-first subscription tracker for managing recurring payments, reminders, spending insights, and multi-currency subscription data.",
@@ -356,7 +318,7 @@ export const infrastructureProjects: Project[] = [
   {
     slug: "onchain-pilot",
     title: "Onchain Pilot",
-    index: "08",
+    index: "07",
     category: "Base / B20 Token Console",
     description:
       "Operator console for B20 tokens on Base mainnet: create tokens, then mint, burn, freeze, pause and manage policies with simulation and review before every wallet signature. The app never holds keys.",
@@ -387,7 +349,7 @@ export const infrastructureProjects: Project[] = [
   {
     slug: "contour",
     title: "Contour Name Protocol",
-    index: "09",
+    index: "08",
     category: "Arc / Name Service",
     description:
       ".contour name service on Arc with USDC payments: ERC-721 name NFTs, forward and reverse resolution, a fixed-price marketplace, a TypeScript SDK and a hosted MCP server for AI agents.",
@@ -422,7 +384,7 @@ export const infrastructureProjects: Project[] = [
   {
     slug: "sepbase",
     title: "SEPBASE",
-    index: "10",
+    index: "09",
     category: "Base Sepolia / Name Service",
     description:
       "Onchain name service on Base Sepolia: names like alice.sepbase are ERC-721 tokens with lifecycle states, renewals, referrals, a marketplace, a TypeScript SDK, a React component and a read-only API.",
@@ -454,17 +416,20 @@ export const infrastructureProjects: Project[] = [
       "pnpm monorepo with a web app and API, SDK and React packages and a Foundry contract that is the only source of truth. No database."
   },
   {
-    slug: "anychain",
-    title: "AnyChain",
-    index: "11",
-    category: "Arc / USDC Bridge Checkout",
+    slug: "routedust",
+    title: "RouteDust",
+    index: "10",
+    category: "Testnet Infrastructure / Cross-chain Router",
+    summary:
+      "Multi-chain testnet asset router and dust consolidator: scans a wallet across 20 testnets, quotes and simulates every swap and bridge path, and consolidates balances into the chain and asset you choose.",
     description:
-      "Browser-only checkout that bridges testnet USDC from 23 EVM and Solana networks to a recipient on Arc through Circle CCTP v2 and the Forwarding Service, so nobody needs a destination wallet.",
+      "RouteDust discovers live swap and bridge capabilities at runtime instead of hardcoding them: Circle CCTP and Gateway, Uniswap v2, v3 and v4, Hyperlane warp routes, Stargate V2, Across, LI.FI intents and OP Standard Bridge deposits. It reserves source gas, scores and splits routes, handles partial fills, and executes everything from the user's own wallet with no backend and no custody.",
     features: [
-      "Source network picker with EIP-6963 EVM wallets and Phantom or Solana wallets",
-      "Fee estimates and live progress through approve, burn, Circle attestation and delivery",
-      "Locally saved steps so a failed transfer resumes safely and only tops up missing allowance",
-      "EIP-5792 batching of approve and burn into one wallet prompt where supported"
+      "Wallet scan and route planning across 20 EVM testnets, with watch mode for any address",
+      "Runtime capability discovery across Circle CCTP and Gateway, Uniswap v2/v3/v4, Hyperlane, Stargate V2, Across, LI.FI and OP Standard Bridge",
+      "Gas reserve, price-impact limits, split routes, multi-hop detours and PARTIAL plans when liquidity caps out",
+      "Resumable route and batch timelines with permanent history and on-chain CCTP burn recovery",
+      "Networks, protocols, coverage, faucets and liquidity pages backed by an on-chain probe and a provenance-stamped registry"
     ],
     stack: [
       "Next.js",
@@ -472,23 +437,28 @@ export const infrastructureProjects: Project[] = [
       "TypeScript",
       "Tailwind",
       "Viem",
-      "Circle",
-      "Solana",
-      "Vitest"
+      "Wagmi",
+      "Circle CCTP",
+      "Uniswap",
+      "Li.Fi",
+      "Zustand",
+      "TanStack Query",
+      "Vitest",
+      "Vercel"
     ],
     links: [
-      { label: "Live", href: "https://arc-anychain.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/arc-anychain" }
+      { label: "Live", href: "https://routedust.xyz" },
+      { label: "GitHub", href: "https://github.com/yusufky63/routedust" }
     ],
-    status: "Public repository and live testnet deployment.",
-    role: "Built the checkout flow, multi-wallet connection layer, recovery rules and transfer history.",
+    status: "Public monorepo and live deployment, verified live against 20 testnets.",
+    role: "Built the capability graph, planner and execution engine, protocol adapters, registry and probe tooling, and the web app.",
     architecture:
-      "Single Next.js app with no backend: one checkout component plus pure library modules for networks, recovery, history and validation."
+      "pnpm monorepo with a core planning and execution engine, a registry of chains, assets and deployments with bytecode provenance, one adapter per protocol, CLI probe and discovery scripts, and a Next.js App Router UI."
   },
   {
     slug: "batchpayarc",
     title: "BatchPayArc",
-    index: "12",
+    index: "11",
     category: "Arc / Batch Payments",
     description:
       "Non-custodial bulk USDC payout tool on Arc Testnet: CSV import, simulation and gas estimates, Multicall3 batches of up to 100 payments and resumable checkpoints so nobody is paid twice.",
@@ -520,7 +490,7 @@ export const infrastructureProjects: Project[] = [
   {
     slug: "giwa-flashkit",
     title: "GIWA FlashKit",
-    index: "13",
+    index: "12",
     category: "GIWA / Developer Toolkit",
     description:
       "Developer toolkit for GIWA that surfaces ~200ms early confirmations and tracks transactions from preconfirmed to finalized, with React hooks, UI components, a mock RPC testing kit and a live portal.",
@@ -549,6 +519,39 @@ export const infrastructureProjects: Project[] = [
     role: "Built the core tracking engine, React and UI packages, testing kit, portal and benchmark evidence.",
     architecture:
       "Turborepo monorepo with core, react, ui and testing packages, a Next.js portal, examples and demo contracts."
+  },
+  {
+    slug: "anychain",
+    homepage: false,
+    title: "AnyChain",
+    index: "13",
+    category: "Arc / USDC Bridge Checkout",
+    description:
+      "Browser-only checkout that bridges testnet USDC from 23 EVM and Solana networks to a recipient on Arc through Circle CCTP v2 and the Forwarding Service, so nobody needs a destination wallet.",
+    features: [
+      "Source network picker with EIP-6963 EVM wallets and Phantom or Solana wallets",
+      "Fee estimates and live progress through approve, burn, Circle attestation and delivery",
+      "Locally saved steps so a failed transfer resumes safely and only tops up missing allowance",
+      "EIP-5792 batching of approve and burn into one wallet prompt where supported"
+    ],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Viem",
+      "Circle",
+      "Solana",
+      "Vitest"
+    ],
+    links: [
+      { label: "Live", href: "https://arc-anychain.vercel.app" },
+      { label: "GitHub", href: "https://github.com/yusufky63/arc-anychain" }
+    ],
+    status: "Public repository and live testnet deployment.",
+    role: "Built the checkout flow, multi-wallet connection layer, recovery rules and transfer history.",
+    architecture:
+      "Single Next.js app with no backend: one checkout component plus pure library modules for networks, recovery, history and validation."
   }
 ];
 
@@ -818,38 +821,13 @@ export const toolProjects: Project[] = [
     role: "Built the loader primitive system, public docs, tuning studio, registry generation workflow, package distribution, and validation pipeline.",
     architecture:
       "Next.js site with docs, gallery, studio, playground, generated shadcn registry files, source loader primitives, package build output, Vitest coverage, and consumer smoke checks."
-  },
-  {
-    slug: "youtube-shorts-pipeline",
-    title: "YouTube Shorts Pipeline",
-    index: "23",
-    category: "AI Media Automation",
-    description:
-      "Streamlit video pipeline for analysis, Turkish narration, ElevenLabs voiceover, ASS/SRT subtitles, and FFmpeg rendering.",
-    features: [
-      "Video analysis and script generation",
-      "ElevenLabs voiceover",
-      "ASS/SRT subtitle generation",
-      "FFmpeg Shorts rendering pipeline"
-    ],
-    stack: ["Python", "Streamlit", "Google Gemini", "ElevenLabs", "FFmpeg"],
-    links: [
-      {
-        label: "GitHub",
-        href: "https://github.com/yusufky63/youtube-shorts-video-pipeline"
-      }
-    ],
-    status: "Public repository.",
-    role: "Built the video processing workflow, AI narration path, subtitle pipeline, and render automation.",
-    architecture:
-      "Python and Streamlit tool that coordinates Gemini analysis, ElevenLabs TTS, subtitle generation, and FFmpeg rendering."
   }
 ];
 
 export const miniApps: Project[] = [
   {
     slug: "farsender",
-    index: "24",
+    index: "23",
     title: "FarSender",
     category: "Farcaster Mini App / Multisender",
     description:
@@ -872,7 +850,7 @@ export const miniApps: Project[] = [
   },
   {
     slug: "8bitminter",
-    index: "25",
+    index: "24",
     title: "8bitMinter",
     category: "Farcaster Mini App / Token Creator",
     description:
@@ -906,7 +884,7 @@ export const miniApps: Project[] = [
   },
   {
     slug: "base-2048",
-    index: "26",
+    index: "25",
     title: "Base 2048",
     category: "Game / Base Mini App",
     description:
@@ -939,7 +917,7 @@ export const miniApps: Project[] = [
   },
   {
     slug: "base-counter",
-    index: "27",
+    index: "26",
     title: "Base Counter",
     category: "On-chain Counter / Base",
     description:
@@ -970,7 +948,7 @@ export const miniApps: Project[] = [
   },
   {
     slug: "frevoke",
-    index: "28",
+    index: "27",
     title: "Frevoke",
     category: "Security Utility / Base",
     description:
@@ -1001,7 +979,7 @@ export const miniApps: Project[] = [
   },
   {
     slug: "cosmic-raid",
-    index: "29",
+    index: "28",
     title: "Cosmic Raid",
     category: "Arcade Game / Farcaster",
     description:
@@ -1039,7 +1017,7 @@ export const projectGroups: ProjectGroup[] = [
     eyebrow: "01 / Featured",
     title: "Featured Products",
     description:
-      "Product-led case studies. The newest Base DeFi, launchpad and testnet routing work comes first, followed by the founder platform, the gaming product and the consumer apps.",
+      "Product-led case studies: the founder platform first, then the newest Base DeFi and launchpad work, the gaming product and the consumer apps.",
     layout: "rows",
     projects: featuredProjects
   },
@@ -1048,7 +1026,7 @@ export const projectGroups: ProjectGroup[] = [
     eyebrow: "02 / Onchain",
     title: "Onchain Infrastructure",
     description:
-      "Token operations, name services, bridges, payout tooling and developer kits across Base, Arc and GIWA.",
+      "Token operations, name services, testnet routing, payout tooling and developer kits across Base, Arc and GIWA.",
     layout: "cards",
     projects: infrastructureProjects
   },
@@ -1057,7 +1035,7 @@ export const projectGroups: ProjectGroup[] = [
     eyebrow: "03 / AI & Tools",
     title: "AI, Agents & Tooling",
     description:
-      "Agent control planes, bots, desktop tools, open-source UI tooling and media automation that support the wider product-builder profile.",
+      "Agent control planes, bots, desktop tools and open-source UI tooling that support the wider product-builder profile.",
     layout: "cards",
     projects: toolProjects
   },
@@ -1072,6 +1050,11 @@ export const projectGroups: ProjectGroup[] = [
   }
 ];
 
+export const homepageGroups: ProjectGroup[] = projectGroups.map((group) => ({
+  ...group,
+  projects: group.projects.filter((project) => project.homepage !== false)
+}));
+
 export const allProjects: Project[] = projectGroups.flatMap(
   (group) => group.projects
 );
@@ -1080,10 +1063,10 @@ export const capabilities: CapabilityGroup[] = [
   {
     title: "Product",
     items: [
+      "Wallet analytics",
       "Tokenized stock trading",
       "Token launchpads",
       "Testnet routing & bridges",
-      "Wallet analytics",
       "On-chain games",
       "Name services",
       "AI agent tooling",
@@ -1132,7 +1115,6 @@ export const capabilities: CapabilityGroup[] = [
       "Gemini",
       "DeepSeek",
       "MCP",
-      "ElevenLabs",
       "Telegram Bots"
     ]
   }

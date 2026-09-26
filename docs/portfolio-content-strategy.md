@@ -502,9 +502,9 @@ The homepage order changed to lead with the newest Base DeFi and infrastructure 
 
 Section order:
 
-1. Featured Products (rows): BStocks, BStocks Launchpad, RouteDust, zkCodex, BasePlay, DrawCoin, Abonely.
-2. Onchain Infrastructure (cards): Onchain Pilot, Contour Name Protocol, SEPBASE, AnyChain, BatchPayArc, GIWA FlashKit.
-3. AI, Agents & Tooling (cards): CoreMesh, TRACE/CORE, BaseStocks Bot, ArcPilot, GPT Image Studio, Coin Tracker Bot, VisionZ AI, Lexoraft, CellForge, YouTube Shorts Pipeline.
+1. Featured Products (rows): zkCodex, BStocks, BStocks Launchpad, BasePlay, DrawCoin, Abonely.
+2. Onchain Infrastructure (cards): Onchain Pilot, Contour Name Protocol, SEPBASE, RouteDust, BatchPayArc, GIWA FlashKit. AnyChain is listed on `/projects` only (`homepage: false`).
+3. AI, Agents & Tooling (cards): CoreMesh, TRACE/CORE, BaseStocks Bot, ArcPilot, GPT Image Studio, Coin Tracker Bot, VisionZ AI, Lexoraft, CellForge. The YouTube Shorts Pipeline was removed from the index.
 4. Mini Apps (cards, background): FarSender, 8bitMinter, Base 2048, Base Counter, Frevoke, Cosmic Raid.
 5. Capabilities, Contact.
 
