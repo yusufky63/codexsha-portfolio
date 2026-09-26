@@ -4,7 +4,8 @@ import { socialLinks } from "@/data/portfolio";
 
 const navItems = [
   { label: "Projects", href: "/projects" },
-  { label: "Mini Apps", href: "/#mini-apps" },
+  { label: "Infra", href: "/#infrastructure" },
+  { label: "AI & Tools", href: "/#tools" },
   { label: "Stack", href: "/#stack" },
   { label: "Contact", href: "/#contact" }
 ];

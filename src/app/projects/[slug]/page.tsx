@@ -6,7 +6,7 @@ import { ProjectLinkList } from "@/components/project-link-list";
 import { SiteHeader } from "@/components/site-header";
 import { TechStackIcons } from "@/components/tech-stack-icons";
 import { Button } from "@/components/ui/button";
-import { allProjects, getFeaturedProject } from "@/data/portfolio";
+import { allProjects, getProject, getProjectSummary } from "@/data/portfolio";
 
 type ProjectPageProps = {
   params: Promise<{
@@ -24,7 +24,7 @@ export async function generateMetadata({
   params
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = getFeaturedProject(slug);
+  const project = getProject(slug);
 
   if (!project) {
     return {
@@ -34,17 +34,20 @@ export async function generateMetadata({
 
   return {
     title: `${project.title} - Codexsha`,
-    description: project.summary
+    description: getProjectSummary(project)
   };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = getFeaturedProject(slug);
+  const project = getProject(slug);
 
   if (!project) {
     notFound();
   }
+
+  const summary = getProjectSummary(project);
+  const hasSeparateOverview = summary !== project.description;
 
   return (
     <main className="min-h-screen bg-[#121212]">
@@ -97,9 +100,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <section className="py-8">
           <div className="space-y-4">
-            <DetailBlock title="Overview">
-              <p>{project.summary}</p>
-            </DetailBlock>
+            {hasSeparateOverview ? (
+              <DetailBlock title="Overview">
+                <p>{summary}</p>
+              </DetailBlock>
+            ) : null}
 
             <DetailBlock title="Key Features">
               <ul className="grid gap-2">

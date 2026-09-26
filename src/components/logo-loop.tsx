@@ -1,43 +1,24 @@
-import {
-  siChainlink,
-  siCoinbase,
-  siEthers,
-  siExpress,
-  siExpo,
-  siFarcaster,
-  siNextdotjs,
-  siNodedotjs,
-  siReact,
-  siSolidity,
-  siSupabase,
-  siTailwindcss,
-  siTypescript,
-  siWagmi
-} from "simple-icons";
+import { TechGlyph } from "@/components/tech-stack-icons";
 
-type LogoItem = {
-  label: string;
-  path?: string;
-  glyph?: "viem" | "zora";
-};
-
-const logos: LogoItem[] = [
-  { label: "Next.js", path: siNextdotjs.path },
-  { label: "TypeScript", path: siTypescript.path },
-  { label: "React", path: siReact.path },
-  { label: "Tailwind", path: siTailwindcss.path },
-  { label: "Wagmi", path: siWagmi.path },
-  { label: "Viem", glyph: "viem" },
-  { label: "Ethers", path: siEthers.path },
-  { label: "Farcaster", path: siFarcaster.path },
-  { label: "Zora", glyph: "zora" },
-  { label: "OnchainKit", path: siCoinbase.path },
-  { label: "Supabase", path: siSupabase.path },
-  { label: "Solidity", path: siSolidity.path },
-  { label: "Chainlink", path: siChainlink.path },
-  { label: "Node.js", path: siNodedotjs.path },
-  { label: "Express", path: siExpress.path },
-  { label: "Expo", path: siExpo.path }
+const logos = [
+  "Next.js",
+  "TypeScript",
+  "React",
+  "Tailwind",
+  "Wagmi",
+  "Viem",
+  "Solidity",
+  "Foundry",
+  "Uniswap",
+  "Circle",
+  "Base Account",
+  "Chainlink",
+  "Farcaster",
+  "Zora",
+  "Supabase",
+  "PostgreSQL",
+  "Node.js",
+  "Expo"
 ];
 
 export function LogoLoop() {
@@ -62,43 +43,15 @@ function LogoSet({ ariaHidden = false }: { ariaHidden?: boolean }) {
       aria-hidden={ariaHidden}
       className="logo-set flex shrink-0 gap-2 px-1.5"
     >
-      {logos.map((logo) => (
+      {logos.map((label) => (
         <span
           className="inline-flex h-9 min-w-28 items-center justify-center gap-2 rounded-md border border-[#292929] bg-[#1b1b1b] px-3 font-mono text-[11px] text-[#a8a8a8]"
-          key={logo.label}
+          key={label}
         >
-          {logo.path ? (
-            <svg
-              aria-hidden="true"
-              className="size-3.5 text-[#d0d0d0]"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d={logo.path} />
-            </svg>
-          ) : (
-            <LogoGlyph glyph={logo.glyph} />
-          )}
-          {logo.label}
+          <TechGlyph className="size-3.5 text-[#d0d0d0]" label={label} />
+          {label}
         </span>
       ))}
     </div>
-  );
-}
-
-function LogoGlyph({ glyph }: { glyph?: LogoItem["glyph"] }) {
-  if (glyph === "zora") {
-    return (
-      <svg aria-hidden="true" className="size-3.5" fill="none" viewBox="0 0 24 24">
-        <path d="M7 6h10L7 18h10" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg aria-hidden="true" className="size-3.5" fill="none" viewBox="0 0 24 24">
-      <path d="M5 7h14l-7 11Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" />
-      <path d="M9 7l3 11 3-11" stroke="currentColor" strokeLinecap="round" strokeWidth="1.4" />
-    </svg>
   );
 }

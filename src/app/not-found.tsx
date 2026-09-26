@@ -14,8 +14,8 @@ export default function NotFound() {
           Page not found
         </h1>
         <p className="mt-3 text-sm leading-6 text-[#a1a1a1]">
-          This route is not part of the compact portfolio index. The current v1
-          only exposes detail pages for the four flagship projects.
+          This route is not part of the compact portfolio index. Every project
+          listed on the homepage has its own detail page under /projects.
         </p>
         <div className="mt-5 flex gap-2">
           <Button href="/" variant="primary">

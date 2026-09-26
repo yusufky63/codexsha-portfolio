@@ -495,3 +495,24 @@ The UI can be built from these content blocks:
 The site should not look like a repo directory. It should look like a product builder profile with a clear hierarchy:
 
 > Founder platforms first, shipped products second, mini app ecosystem third, tooling and experiments last.
+
+## September 2026 Update
+
+The homepage order changed to lead with the newest Base DeFi and infrastructure work. Farcaster mini apps moved to the last project section as background experiments.
+
+Section order:
+
+1. Featured Products (rows): BStocks, BStocks Launchpad, RouteDust, zkCodex, BasePlay, DrawCoin, Abonely.
+2. Onchain Infrastructure (cards): Onchain Pilot, Contour Name Protocol, SEPBASE, AnyChain, BatchPayArc, GIWA FlashKit.
+3. AI, Agents & Tooling (cards): CoreMesh, TRACE/CORE, BaseStocks Bot, ArcPilot, GPT Image Studio, Coin Tracker Bot, VisionZ AI, Lexoraft, CellForge, YouTube Shorts Pipeline.
+4. Mini Apps (cards, background): FarSender, 8bitMinter, Base 2048, Base Counter, Frevoke, Cosmic Raid.
+5. Capabilities, Contact.
+
+Content rules that still apply:
+
+- BasePlay now has a public repository (`base-play-game`), so its GitHub link is shown and the private note was removed.
+- BStocks and the Launchpad share one brand mark; the bot is listed as a separate product because it is deployed separately.
+- `crypto-website-demo` is a concept landing page with invented data and stays out of the index.
+- Legacy trackers and forks remain excluded.
+
+Section anchors used by the header: `#projects`, `#infrastructure`, `#tools`, `#mini-apps`, `#stack`, `#contact`.

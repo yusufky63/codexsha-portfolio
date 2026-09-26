@@ -3,7 +3,8 @@ import {
   Boxes,
   BrainCircuit,
   Mail,
-  Zap
+  Zap,
+  type LucideIcon
 } from "lucide-react";
 import { BlurText } from "@/components/effects/blur-text";
 import { CapabilitiesPanel } from "@/components/capabilities-panel";
@@ -17,13 +18,13 @@ import { GitHubMark, TelegramMark, XMark } from "@/components/social-icons";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import {
-  capabilities,
-  featuredProjects,
-  miniApps,
-  stats,
-  tools
-} from "@/data/portfolio";
+import { capabilities, projectGroups, stats } from "@/data/portfolio";
+
+const contactHighlights: Array<[label: string, icon: LucideIcon]> = [
+  ["Product systems", Boxes],
+  ["Onchain UX", Zap],
+  ["AI workflows", BrainCircuit]
+];
 
 export default function Home() {
   return (
@@ -42,7 +43,7 @@ export default function Home() {
             />
             <BlurText
               className="mt-4 max-w-2xl text-[15px] leading-7 text-[#a1a1a1]"
-              text="I build wallet analytics, Farcaster Mini Apps, Base-native games, AI creator tools, and mobile consumer apps with full-stack product ownership."
+              text="I build Base DeFi interfaces, token launchpads, testnet routing infrastructure, wallet analytics, on-chain games, AI agent tooling, and mobile consumer apps with full-stack product ownership."
             />
             <div className="mt-5 flex flex-wrap gap-2">
               <Button href="/projects" variant="primary">
@@ -72,49 +73,37 @@ export default function Home() {
 
         <GitHubActivity />
 
-        <section className="py-10" id="projects">
-          <SectionHeading
-            description="Four product-led case studies. Private projects are described by product value and stack, without exposing sensitive repository details."
-            eyebrow="01 / Flagship"
-            title="Featured Products"
-          />
-          <div className="grid gap-3">
-            {featuredProjects.map((project) => (
-              <ProjectRow key={project.slug} project={project} />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-6" id="mini-apps">
-          <SectionHeading
-            description="Focused products for fast wallet actions, games, token creation, and social on-chain flows."
-            eyebrow="02 / Farcaster"
-            title="Mini Apps"
-          />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {miniApps.map((project) => (
-              <CompactCard key={project.title} project={project} />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-10">
-          <SectionHeading
-            description="AI apps, open-source UI tooling, and media automation work that supports the wider product-builder profile."
-            eyebrow="03 / Tools"
-            title="AI & Tooling"
-          />
-          <div className="grid gap-3 md:grid-cols-3">
-            {tools.map((project) => (
-              <CompactCard key={project.title} project={project} />
-            ))}
-          </div>
-        </section>
+        {projectGroups.map((group) => (
+          <section
+            className={group.layout === "rows" ? "py-10" : "py-6"}
+            id={group.id}
+            key={group.id}
+          >
+            <SectionHeading
+              description={group.description}
+              eyebrow={group.eyebrow}
+              title={group.title}
+            />
+            {group.layout === "rows" ? (
+              <div className="grid gap-3">
+                {group.projects.map((project) => (
+                  <ProjectRow key={project.slug} project={project} />
+                ))}
+              </div>
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {group.projects.map((project) => (
+                  <CompactCard key={project.slug} project={project} />
+                ))}
+              </div>
+            )}
+          </section>
+        ))}
 
         <section className="py-6" id="stack">
           <SectionHeading
             description="A compact view of the systems and product surfaces behind the work."
-            eyebrow="04 / Stack"
+            eyebrow="05 / Stack"
             title="Capabilities"
           />
           <LogoLoop />
@@ -131,7 +120,7 @@ export default function Home() {
                 Contact
               </p>
               <h2 className="mt-2 text-xl font-medium text-[#e6e6e6]">
-                Building on-chain products, mini apps, or AI creator tools?
+                Building on-chain products, DeFi interfaces, or AI agent tools?
               </h2>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-[#a1a1a1]">
                 Reach out for focused product work across frontend, backend,
@@ -139,17 +128,13 @@ export default function Home() {
                 portfolio is compact; the product surface is broader.
               </p>
               <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                {[
-                  ["Product systems", Boxes],
-                  ["Mini app UX", Zap],
-                  ["AI workflows", BrainCircuit]
-                ].map(([label, Icon]) => (
+                {contactHighlights.map(([label, Icon]) => (
                   <div
                     className="flex items-center gap-2 rounded-md border border-[#292929] bg-[#1b1b1b] px-3 py-2 text-[12px] text-[#a8a8a8]"
-                    key={label as string}
+                    key={label}
                   >
                     <Icon className="size-3.5 text-[#c9c9c9]" />
-                    {label as string}
+                    {label}
                   </div>
                 ))}
               </div>

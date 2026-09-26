@@ -1,25 +1,46 @@
 import Image from "next/image";
 import {
+  AtSign,
   BadgePlus,
+  Banknote,
   BarChart3,
+  Bot,
+  ChartCandlestick,
   Clapperboard,
   Coins,
+  Fingerprint,
   Gamepad2,
   Grid3X3,
+  Image as ImageIcon,
+  Landmark,
   Languages,
   Palette,
+  Radar,
   Rocket,
+  Route,
   Send,
   ShieldOff,
   Smartphone,
-  WandSparkles
+  Terminal,
+  Timer,
+  WandSparkles,
+  Waypoints,
+  type LucideIcon
 } from "lucide-react";
 
 const projectLogos: Record<string, string> = {
+  bstocks: "/project-icons/bstocks.png",
+  "bstocks-launchpad": "/project-icons/bstocks.png",
+  routedust: "/project-icons/routedust.svg",
   zkcodex: "/project-icons/zkcodex.png",
   baseplay: "/project-icons/baseplay.png",
   drawcoin: "/project-icons/drawcoin.png",
   abonely: "/project-icons/abonely.png",
+  "onchain-pilot": "/project-icons/onchain-pilot.svg",
+  contour: "/project-icons/contour.svg",
+  sepbase: "/project-icons/sepbase.svg",
+  coremesh: "/project-icons/coremesh.svg",
+  "arc-pilot": "/project-icons/arc-pilot.svg",
   farsender: "/project-icons/farsender.png",
   "8bitminter": "/project-icons/8bitminter.png",
   "base-2048": "/project-icons/base-2048.png",
@@ -31,11 +52,26 @@ const projectLogos: Record<string, string> = {
   lexoraft: "/project-icons/lexoraft.svg"
 };
 
-const projectIcons = {
+const projectIcons: Record<string, LucideIcon> = {
+  bstocks: ChartCandlestick,
+  "bstocks-launchpad": Rocket,
+  routedust: Route,
   zkcodex: BarChart3,
   baseplay: Gamepad2,
   drawcoin: Palette,
   abonely: Smartphone,
+  "onchain-pilot": Coins,
+  contour: AtSign,
+  sepbase: AtSign,
+  anychain: Waypoints,
+  batchpayarc: Banknote,
+  "giwa-flashkit": Timer,
+  coremesh: Bot,
+  "trace-core": Fingerprint,
+  "basestocks-bot": Bot,
+  "arc-pilot": Landmark,
+  "gpt-image-studio": ImageIcon,
+  "coin-tracker-bot": Radar,
   farsender: Send,
   "8bitminter": BadgePlus,
   "base-2048": Grid3X3,
@@ -58,7 +94,7 @@ export function ProjectIconBadge({
   className = ""
 }: ProjectIconBadgeProps) {
   const logo = projectLogos[slug];
-  const Icon = projectIcons[slug as keyof typeof projectIcons] ?? Rocket;
+  const Icon = projectIcons[slug] ?? Terminal;
 
   return (
     <span

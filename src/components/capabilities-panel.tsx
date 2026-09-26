@@ -1,39 +1,27 @@
 import {
+  Anvil,
+  ArrowLeftRight,
+  AtSign,
   Blocks,
   Bot,
   BrainCircuit,
+  ChartCandlestick,
   Code2,
   Database,
   Gamepad2,
   Globe2,
   Layers3,
   LineChart,
-  Network,
   PanelsTopLeft,
   PlugZap,
+  Rocket,
+  Route,
   Server,
   Smartphone,
   WalletCards,
   type LucideIcon
 } from "lucide-react";
-import {
-  siElevenlabs,
-  siEthers,
-  siExpo,
-  siExpress,
-  siFarcaster,
-  siGooglegemini,
-  siNextdotjs,
-  siNodedotjs,
-  siReact,
-  siRedis,
-  siSocketdotio,
-  siSolidity,
-  siSupabase,
-  siTailwindcss,
-  siTypescript,
-  siWagmi
-} from "simple-icons";
+import { TechGlyph } from "@/components/tech-stack-icons";
 import type { CapabilityGroup } from "@/data/portfolio";
 
 const groupIcons: Record<string, LucideIcon> = {
@@ -44,38 +32,30 @@ const groupIcons: Record<string, LucideIcon> = {
   "Mobile + AI": Smartphone
 };
 
+// Product capabilities and a few libraries have no brand mark, so they get a
+// lucide icon. Everything else falls through to the shared TechGlyph set.
 const itemIcons: Record<string, LucideIcon> = {
+  "Tokenized stock trading": ChartCandlestick,
+  "Token launchpads": Rocket,
+  "Testnet routing & bridges": Route,
   "Wallet analytics": LineChart,
-  "Farcaster Mini Apps": Network,
   "On-chain games": Gamepad2,
-  "AI creator tools": BrainCircuit,
+  "Name services": AtSign,
+  "AI agent tooling": BrainCircuit,
   "Mobile subscription tracking": Smartphone,
   "Mobile-first UI": PanelsTopLeft,
   Zora: PlugZap,
   Viem: Layers3,
-  OnchainKit: WalletCards,
+  Foundry: Anvil,
+  "Uniswap v4": ArrowLeftRight,
   "REST APIs": Globe2,
-  WatermelonDB: Database
+  Indexers: Database,
+  WatermelonDB: Database,
+  "Telegram Bots": Bot
 };
 
-const simpleIconPaths: Record<string, string> = {
-  "Next.js": siNextdotjs.path,
-  React: siReact.path,
-  TypeScript: siTypescript.path,
-  Tailwind: siTailwindcss.path,
-  Wagmi: siWagmi.path,
-  Ethers: siEthers.path,
-  Solidity: siSolidity.path,
-  "Node.js": siNodedotjs.path,
-  Express: siExpress.path,
-  Supabase: siSupabase.path,
-  Redis: siRedis.path,
-  "Socket.io": siSocketdotio.path,
-  Expo: siExpo.path,
-  "React Native": siReact.path,
-  Gemini: siGooglegemini.path,
-  ElevenLabs: siElevenlabs.path,
-  "Farcaster Mini Apps": siFarcaster.path
+const glyphAliases: Record<string, string> = {
+  "Telegram Bots": "Telegram"
 };
 
 export function CapabilitiesPanel({
@@ -90,7 +70,7 @@ export function CapabilitiesPanel({
 
         return (
           <section
-            className="grid border-b border-[#252525] last:border-b-0 md:grid-cols-[180px_minmax(0,1fr)]"
+            className="grid border-b border-[#242424] last:border-b-0 md:grid-cols-[180px_minmax(0,1fr)]"
             key={group.title}
           >
             <div className="flex items-center gap-3 border-b border-[#252525] bg-[#191919] px-4 py-3 md:border-b-0 md:border-r">
@@ -125,22 +105,14 @@ export function CapabilitiesPanel({
 }
 
 function CapabilityItemIcon({ item }: { item: string }) {
-  const Icon = itemIcons[item] ?? Bot;
-  const simplePath = simpleIconPaths[item];
+  const Icon = itemIcons[item];
 
   return (
     <span className="inline-flex size-6 shrink-0 items-center justify-center rounded border border-[#2d2d2d] bg-[#1f1f1f] text-[#cfcfcf]">
-      {simplePath ? (
-        <svg
-          aria-hidden="true"
-          className="size-3"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path d={simplePath} />
-        </svg>
-      ) : (
+      {Icon ? (
         <Icon className="size-3" />
+      ) : (
+        <TechGlyph className="size-3" label={glyphAliases[item] ?? item} />
       )}
     </span>
   );

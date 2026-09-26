@@ -1,5 +1,6 @@
 import Link from "next/link";
-import type { Project } from "@/data/portfolio";
+import { getProjectSummary, type Project } from "@/data/portfolio";
+import { DetailsArrow } from "@/components/project-card-chrome";
 import { ProjectIconBadge } from "@/components/project-icon";
 import { ProjectLinkList } from "@/components/project-link-list";
 import { TechStackIcons } from "@/components/tech-stack-icons";
@@ -29,27 +30,7 @@ export function ProjectRow({ project }: ProjectRowProps) {
         iconOnly
         links={githubLinks}
       />
-      <Link
-        aria-label={`View ${project.title} details`}
-        className="absolute right-2 top-2 z-20 hidden size-8 items-center justify-center rounded-md text-[#9a9a9a] transition-colors hover:bg-[#232323] hover:text-[#e6e6e6] md:inline-flex"
-        href={`/projects/${project.slug}`}
-      >
-        <span className="sr-only">Details</span>
-        <svg
-          aria-hidden="true"
-          className="size-4"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M7 17 17 7M9 7h8v8"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.8"
-          />
-        </svg>
-      </Link>
+      <DetailsArrow className="absolute right-2 top-2 z-20 hidden md:inline-flex" />
       <div className="relative grid gap-3 md:grid-cols-[44px_minmax(0,1fr)] md:items-start md:pr-56">
         <span className="font-mono text-[12px] text-[#6f6f6f]">
           {project.index}
@@ -65,31 +46,16 @@ export function ProjectRow({ project }: ProjectRowProps) {
             </span>
           </div>
           <p className="max-w-2xl text-sm leading-6 text-[#a1a1a1]">
-            {project.summary}
+            {getProjectSummary(project)}
           </p>
           <TechStackIcons items={project.stack} />
-          <div className="relative z-20 mt-4 flex items-center justify-between border-t border-[#242424] pt-3 md:hidden">
-            <ProjectLinkList iconOnly links={githubLinks} />
-            <Link
-              aria-label={`View ${project.title} details`}
-              className="ml-auto inline-flex size-8 items-center justify-center rounded-md text-[#bdbdbd] transition-colors hover:bg-[#232323] hover:text-[#e6e6e6]"
-              href={`/projects/${project.slug}`}
-            >
-              <svg
-                aria-hidden="true"
-                className="size-4"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 17 17 7M9 7h8v8"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.8"
-                />
-              </svg>
-            </Link>
+          <div className="pointer-events-none relative z-20 mt-4 flex items-center justify-between border-t border-[#242424] pt-3 md:hidden">
+            <ProjectLinkList
+              className="pointer-events-auto"
+              iconOnly
+              links={githubLinks}
+            />
+            <DetailsArrow className="ml-auto inline-flex text-[#bdbdbd]" />
           </div>
         </div>
       </div>

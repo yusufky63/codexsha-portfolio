@@ -2,45 +2,16 @@ import type { Metadata } from "next";
 import { CompactCard } from "@/components/compact-card";
 import { SiteHeader } from "@/components/site-header";
 import { SectionHeading } from "@/components/ui/section-heading";
-import {
-  featuredProjects,
-  miniApps,
-  tools
-} from "@/data/portfolio";
+import { allProjects, projectGroups } from "@/data/portfolio";
 
 export const metadata: Metadata = {
   title: "Projects - Codexsha",
   description:
-    "All visible Codexsha projects across Web3 products, Farcaster mini apps, AI tools, UI libraries, and automation."
+    "All visible Codexsha projects across Base DeFi, onchain infrastructure, AI agents and tooling, Farcaster mini apps, and mobile products."
 };
 
-const projectGroups = [
-  {
-    eyebrow: "01 / Flagship",
-    title: "Featured Products",
-    description:
-      "Primary product-led case studies with detail pages and public-facing product context.",
-    projects: featuredProjects
-  },
-  {
-    eyebrow: "02 / Farcaster",
-    title: "Mini Apps",
-    description:
-      "Fast wallet actions, games, token creation, and social on-chain flows.",
-    projects: miniApps
-  },
-  {
-    eyebrow: "03 / Tools",
-    title: "AI & Tooling",
-    description:
-      "AI apps, open-source UI tooling, and media automation supporting the wider builder profile.",
-    projects: tools
-  }
-].filter((group) => group.projects.length > 0);
-
-const projectCount = projectGroups.reduce(
-  (total, group) => total + group.projects.length,
-  0
+const visibleGroups = projectGroups.filter(
+  (group) => group.projects.length > 0
 );
 
 export default function ProjectsPage() {
@@ -58,14 +29,14 @@ export default function ProjectsPage() {
                 All visible projects.
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-[#a1a1a1]">
-                A compact index of shipped products, mini apps, tools, and
-                public experiments. Private backend, stats, and feedback repos
-                are intentionally excluded.
+                A compact index of shipped products, onchain infrastructure,
+                tools, and public experiments. Private backend, stats, and
+                feedback repos are intentionally excluded.
               </p>
             </div>
             <div className="rounded-lg border border-[#2a2a2a] bg-[#171717] p-4">
               <p className="font-mono text-2xl text-[#e6e6e6]">
-                {projectCount}
+                {allProjects.length}
               </p>
               <p className="mt-1 text-[12px] text-[#7d7d7d]">
                 visible projects
@@ -75,8 +46,8 @@ export default function ProjectsPage() {
         </section>
 
         <div className="space-y-10 py-8">
-          {projectGroups.map((group) => (
-            <section key={group.title}>
+          {visibleGroups.map((group) => (
+            <section id={group.id} key={group.id}>
               <SectionHeading
                 description={group.description}
                 eyebrow={group.eyebrow}

@@ -1,11 +1,12 @@
-import type { CompactProject } from "@/data/portfolio";
+import Link from "next/link";
+import { getProjectSummary, type Project } from "@/data/portfolio";
+import { DetailsArrow } from "@/components/project-card-chrome";
 import { ProjectIconBadge } from "@/components/project-icon";
 import { ProjectLinkList } from "@/components/project-link-list";
-import Link from "next/link";
 import { TechStackIcons } from "@/components/tech-stack-icons";
 
 type CompactCardProps = {
-  project: CompactProject;
+  project: Project;
 };
 
 export function CompactCard({ project }: CompactCardProps) {
@@ -25,26 +26,7 @@ export function CompactCard({ project }: CompactCardProps) {
         iconOnly
         links={githubLinks}
       />
-      <Link
-        aria-label={`View ${project.title} details`}
-        className="absolute right-2 top-2 z-20 hidden size-8 items-center justify-center rounded-md text-[#9a9a9a] transition-colors hover:bg-[#232323] hover:text-[#e6e6e6] md:inline-flex"
-        href={`/projects/${project.slug}`}
-      >
-        <svg
-          aria-hidden="true"
-          className="size-4"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M7 17 17 7M9 7h8v8"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.8"
-          />
-        </svg>
-      </Link>
+      <DetailsArrow className="absolute right-2 top-2 z-20 hidden md:inline-flex" />
       <div className="flex min-h-[126px] flex-col justify-between gap-3 md:pr-20">
         <div className="pr-1">
           <div className="flex items-center gap-2">
@@ -59,33 +41,18 @@ export function CompactCard({ project }: CompactCardProps) {
             </div>
           </div>
           <p className="project-card-description mt-2 text-[12px] leading-5 text-[#a1a1a1]">
-            {project.description}
+            {getProjectSummary(project)}
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <TechStackIcons items={project.stack} limit={4} />
-          <div className="relative z-20 flex items-center justify-between border-t border-[#242424] pt-3 md:hidden">
-            <ProjectLinkList iconOnly links={githubLinks} />
-            <Link
-              aria-label={`View ${project.title} details`}
-              className="ml-auto inline-flex size-8 items-center justify-center rounded-md text-[#bdbdbd] transition-colors hover:bg-[#232323] hover:text-[#e6e6e6]"
-              href={`/projects/${project.slug}`}
-            >
-              <svg
-                aria-hidden="true"
-                className="size-4"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 17 17 7M9 7h8v8"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.8"
-                />
-              </svg>
-            </Link>
+          <div className="pointer-events-none relative z-20 flex items-center justify-between border-t border-[#242424] pt-3 md:hidden">
+            <ProjectLinkList
+              className="pointer-events-auto"
+              iconOnly
+              links={githubLinks}
+            />
+            <DetailsArrow className="ml-auto inline-flex text-[#bdbdbd]" />
           </div>
         </div>
       </div>
