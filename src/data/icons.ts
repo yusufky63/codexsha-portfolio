@@ -28,6 +28,8 @@ export const projectIcons: Record<string, string> = {
   coremesh: "/project-icons/coremesh.svg",
   contour: "/project-icons/contour.svg",
   sepbase: "/project-icons/sepbase.svg",
+  "onchain-pilot": "/project-icons/onchain-pilot.svg",
+  "arc-pilot": "/project-icons/arc-pilot.svg",
 
   farsender: "/project-icons/farsender.png",
   "8bitminter": "/project-icons/8bitminter.png",

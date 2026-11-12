@@ -336,5 +336,34 @@ export const desktop: Project[] = [
     repo: "reclaim-cleaner",
     license: "MIT",
     pinned: true
+  },
+  {
+    slug: "gpt-image-studio",
+    title: "GPT Image Studio",
+    group: "desktop",
+    category: "Desktop App / AI Imaging",
+    year: 2026,
+    summary: "Windows desktop app for generating, editing and outpainting images with OpenAI GPT Image models, with local history, token and cost tracking and API keys stored in Windows Credential Manager.",
+    description: "Windows desktop app for generating, editing and outpainting images with OpenAI GPT Image models, with local history, token and cost tracking and API keys stored in Windows Credential Manager.",
+    features: [
+      "Text-to-image, edit and reference, and expand or outpaint modes",
+      "Local resize, crop and stretch without API calls",
+      "Quality, format, background and aspect-ratio controls including 4K presets",
+      "SQLite history with token usage and USD cost tracking"
+    ],
+    stack: [
+      "Python",
+      "Qt",
+      "OpenAI",
+      "SQLite",
+      "GitHub Actions"
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/yusufky63/GPT-Image-Studio" }
+    ],
+    status: "Public repository released as v1.0.2 with a CI-built Windows executable.",
+    architecture: "Single PySide6 desktop app split into api, db, pricing, security and validation modules, packaged with PyInstaller.",
+    role: "Built the desktop UI, API client, pricing model, secure key storage and release pipeline.",
+    repo: "GPT-Image-Studio"
   }
 ];

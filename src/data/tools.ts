@@ -104,5 +104,38 @@ export const tools: Project[] = [
     architecture: "Next.js App Router application with browser-local persistence, server AI provider adapters, Zod validation, security checks, rate limits, and browser speech/TTS flows.",
     role: "Built the learning workspace, progress model, AI provider settings, practice flows, and production deployment.",
     repo: "english-learning"
+  },
+  {
+    slug: "coin-tracker-bot",
+    title: "Coin Tracker Bot",
+    group: "tool",
+    category: "Telegram Bot / BSC Holders",
+    year: 2026,
+    summary: "Telegram bot that tracks top holders of BSC tokens and alerts on watched wallet transfers over a live WebSocket, with Moralis and Etherscan data, catch-up of missed transfers and per-user settings.",
+    description: "Telegram bot that tracks top holders of BSC tokens and alerts on watched wallet transfers over a live WebSocket, with Moralis and Etherscan data, catch-up of missed transfers and per-user settings.",
+    features: [
+      "Add, rename and remove BEP-20 tokens with on-chain fallback for details",
+      "Top-holder rankings and USD prices from Moralis or Etherscan",
+      "Wallet and rank watchers with live transfer alerts and missed-transfer catch-up",
+      "Button-driven settings with isolated data per Telegram user"
+    ],
+    stack: [
+      "Node.js",
+      "TypeScript",
+      "Telegram",
+      "Ethers",
+      "Fastify",
+      "Prisma",
+      "PostgreSQL",
+      "Docker",
+      "Vitest"
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/yusufky63/tg-coin-tracker" }
+    ],
+    status: "Public repository, Railway-ready with Docker, health checks and unit plus live tests.",
+    architecture: "grammY bot and Fastify webhook server with watcher, holder scheduler and notification services over a Prisma and PostgreSQL database.",
+    role: "Built the bot, watcher services, scheduler, notification flow and data model.",
+    repo: "tg-coin-tracker"
   }
 ];

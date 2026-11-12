@@ -119,7 +119,7 @@ export const onchain: Project[] = [
     repo: "routedust"
   },
   {
-    slug: "flashkit",
+    slug: "giwa-flashkit",
     title: "FlashKit for GIWA",
     group: "onchain",
     category: "Developer Toolkit / GIWA",
@@ -181,7 +181,6 @@ export const onchain: Project[] = [
       "Vercel"
     ],
     links: [
-      { label: "Live", href: "https://basestocks-bot.vercel.app" },
       { label: "GitHub", href: "https://github.com/yusufky63/basestocks-bot" }
     ],
     status: "Public repository with a Vercel deployment; /chart, launch alerts and authenticated wallet linking are listed as not built yet.",
@@ -455,7 +454,6 @@ export const onchain: Project[] = [
       "Playwright"
     ],
     links: [
-      { label: "Live", href: "https://b20-pilot.vercel.app" },
       { label: "GitHub", href: "https://github.com/yusufky63/base-onchain-pilot" }
     ],
     status: "Public repository with a deployment at b20-pilot.vercel.app; a production-candidate targeting Base Mainnet (8453), with real wallet writes kept as a manual release gate.",
@@ -496,5 +494,38 @@ export const onchain: Project[] = [
     status: "Public repository with a live web app; the contract is deployed and source-verified on the Base Sepolia testnet, and the SDK packages are not yet published to npm.",
     architecture: "pnpm monorepo: a Next.js App Router dApp with a read-only API, a single non-upgradeable Foundry contract (ChainNameService v2.0.0), and SDK and React packages driven by a deployment manifest. The contract is the source of truth; there is no required database or indexer.",
     repo: "sepbase"
+  },
+  {
+    slug: "arc-pilot",
+    title: "ArcPilot",
+    group: "onchain",
+    category: "Arc / Treasury Operator Console",
+    year: 2026,
+    summary: "Local-first operator console that checks USDC treasury payouts on Arc against fixed rules, proposes PAY or BRIDGE_THEN_PAY actions and keeps a hashed evidence log in SQLite.",
+    description: "Local-first operator console that checks USDC treasury payouts on Arc against fixed rules, proposes PAY or BRIDGE_THEN_PAY actions and keeps a hashed evidence log in SQLite. Sending money stays locked off.",
+    features: [
+      "Payout batches with allowed recipients, USDC caps, protected reserve, bridge-fee limit and due time",
+      "Repeatable rule checks and hashes that only propose actions",
+      "Safe demo mode with no network calls and optional read-only balance checks on Arc and Base",
+      "SQLite evidence log with JSON export and a one-click Windows launcher"
+    ],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Viem",
+      "Zod",
+      "SQLite",
+      "Circle",
+      "Foundry",
+      "Vitest"
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/yusufky63/arc-pilot" }
+    ],
+    status: "Public repository at v0.2.0 with CI running 113 Vitest and 12 Foundry tests.",
+    architecture: "Next.js app with a Node server layer for observation, orchestration and persistence, CLI workers, a Foundry batch registry contract and SQLite storage.",
+    role: "Built the observer, orchestrator, persistence layer, batch registry contract and operator UI.",
+    repo: "arc-pilot"
   }
 ];
