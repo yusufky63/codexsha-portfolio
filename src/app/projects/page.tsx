@@ -1,96 +1,76 @@
 import type { Metadata } from "next";
-import { CompactCard } from "@/components/compact-card";
-import { SiteHeader } from "@/components/site-header";
-import { SectionHeading } from "@/components/ui/section-heading";
-import {
-  featuredProjects,
-  miniApps,
-  tools
-} from "@/data/portfolio";
+import { ProjectIndex, type IndexRow } from "@/components/project-index";
+import { archiveEntries, groupColor, groups, projects } from "@/data/portfolio";
+import { pageMeta } from "@/lib/page-meta";
 
-export const metadata: Metadata = {
-  title: "Projects - Codexsha",
+export const metadata: Metadata = pageMeta({
+  title: "Index",
   description:
-    "All visible Codexsha projects across Web3 products, Farcaster mini apps, AI tools, UI libraries, and automation."
-};
+    "Every project in the Codexsha catalogue: products, desktop apps, browser extensions, onchain apps, Farcaster mini apps, AI tools and archived repositories.",
+  path: "/projects"
+});
 
-const projectGroups = [
-  {
-    eyebrow: "01 / Flagship",
-    title: "Featured Products",
-    description:
-      "Primary product-led case studies with detail pages and public-facing product context.",
-    projects: featuredProjects
-  },
-  {
-    eyebrow: "02 / Farcaster",
-    title: "Mini Apps",
-    description:
-      "Fast wallet actions, games, token creation, and social on-chain flows.",
-    projects: miniApps
-  },
-  {
-    eyebrow: "03 / Tools",
-    title: "AI & Tooling",
-    description:
-      "AI apps, open-source UI tooling, and media automation supporting the wider builder profile.",
-    projects: tools
-  }
-].filter((group) => group.projects.length > 0);
+const rows: IndexRow[] = [
+  ...projects.map((project) => ({
+    key: project.slug,
+    index: project.index,
+    title: project.title,
+    category: project.category,
+    summary: project.summary,
+    year: project.year,
+    href: `/projects/${project.slug}`,
+    external: false,
+    pinned: Boolean(project.pinned),
+    group: project.group,
+    color: groupColor(project.group),
+    iconId: project.slug
+  })),
+  ...archiveEntries.map((entry, position) => ({
+    key: `archive-${entry.repo}`,
+    index: `A${String(position + 1).padStart(2, "0")}`,
+    title: entry.title,
+    category: entry.stack.length ? entry.stack.join(" / ") : "Repository",
+    summary: entry.description,
+    year: entry.year,
+    href: entry.url,
+    external: true,
+    pinned: false,
+    group: "archive",
+    color: groupColor("archive"),
+    iconId: `archive-${entry.repo}`
+  }))
+];
 
-const projectCount = projectGroups.reduce(
-  (total, group) => total + group.projects.length,
-  0
-);
+const filters = [
+  { key: "all", label: "All" },
+  { key: "pinned", label: "Pinned" },
+  ...groups.map((group) => ({ key: group.key, label: group.label, color: groupColor(group.key) })),
+  { key: "archive", label: "Archive", color: groupColor("archive") }
+];
 
 export default function ProjectsPage() {
   return (
-    <main className="min-h-screen bg-[#121212]">
-      <SiteHeader />
-      <div className="mx-auto max-w-[1080px] px-4 pb-12 pt-8 md:px-6 md:pt-11">
-        <section className="border-b border-[#2a2a2a] pb-7">
-          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6f6f6f]">
-            Project Index
-          </p>
-          <div className="mt-3 grid gap-4 md:grid-cols-[minmax(0,1fr)_220px] md:items-end">
-            <div>
-              <h1 className="text-[30px] font-medium leading-tight text-[#e6e6e6] md:text-[36px]">
-                All visible projects.
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-[#a1a1a1]">
-                A compact index of shipped products, mini apps, tools, and
-                public experiments. Private backend, stats, and feedback repos
-                are intentionally excluded.
-              </p>
-            </div>
-            <div className="rounded-lg border border-[#2a2a2a] bg-[#171717] p-4">
-              <p className="font-mono text-2xl text-[#e6e6e6]">
-                {projectCount}
-              </p>
-              <p className="mt-1 text-[12px] text-[#7d7d7d]">
-                visible projects
-              </p>
-            </div>
-          </div>
-        </section>
+    <main className="mx-auto max-w-[1320px] px-4 md:px-7">
+      <section className="pt-10 md:pt-16">
+        <p className="eyebrow" data-dust-root="">
+          <span className="n">Index</span>
+          {projects.length} case studies / {archiveEntries.length} archived
+        </p>
+        <h1
+          className="display mt-8 text-[56px] leading-[0.9] text-ink md:text-[112px]"
+          data-dust-root=""
+        >
+          The index
+        </h1>
+        <p className="mt-6 max-w-2xl text-[15px] text-ink-secondary" data-dust-root="">
+          Numbered rows open a case study. Rows marked A are public repositories kept for the record; they open on
+          GitHub. Private backends and client work are left out.
+        </p>
+      </section>
 
-        <div className="space-y-10 py-8">
-          {projectGroups.map((group) => (
-            <section key={group.title}>
-              <SectionHeading
-                description={group.description}
-                eyebrow={group.eyebrow}
-                title={group.title}
-              />
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {group.projects.map((project) => (
-                  <CompactCard key={project.slug} project={project} />
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-      </div>
+      <section className="pt-10 md:pt-14">
+        <ProjectIndex filters={filters} rows={rows} />
+      </section>
     </main>
   );
 }

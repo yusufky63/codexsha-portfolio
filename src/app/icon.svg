@@ -1,4 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#171717"/>
-  <path d="M18 44V20h6l16 17V20h6v24h-6L24 27v17h-6z" fill="#e6e6e6"/>
+  <style>
+    .bg { fill: #111113; }
+    .fg { stroke: #f6f6f7; fill: none; }
+    .grain { fill: #f6f6f7; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #ededef; }
+      .fg { stroke: #0e0e10; }
+      .grain { fill: #0e0e10; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64"/>
+  <path class="fg" d="M41 22.5a15 15 0 1 0 0 19" stroke-width="7"/>
+  <rect class="grain" x="46" y="16" width="4" height="4"/>
+  <rect class="grain" x="52" y="24" width="3" height="3"/>
+  <rect class="grain" x="47" y="44" width="4" height="4"/>
+  <rect class="grain" x="53" y="37" width="3" height="3"/>
 </svg>

@@ -1,146 +1,605 @@
 @import "tailwindcss";
 
+/*
+ * Blueprint instrument panel, after Crewyard: square hairline frames with four
+ * corner ticks, mono uppercase labels, an inverted primary button. Greys carry
+ * the layout; colour is information (project group, state, links).
+ */
 :root {
-  --bg: #121212;
-  --surface: #171717;
-  --surface-2: #1c1c1c;
-  --border: #2a2a2a;
-  --border-strong: #3a3a3a;
-  --text: #e6e6e6;
-  --muted: #a1a1a1;
-  --faint: #6f6f6f;
-  --hover: #202020;
+  color-scheme: light;
+  --header-h: 56px;
+
+  --bg: #f6f6f7;
+  --surface: #ffffff;
+  --raised: #f0f0f2;
+  --sunken: #f3f3f5;
+  --border: #e4e4e8;
+  --tick: #cfcfd5;
+  --border-strong: #8a8a94;
+
+  --text: #111113;
+  --text-secondary: #4b4b53;
+  --text-muted: #62626b;
+  --inverse-bg: #111113;
+  --inverse-fg: #ffffff;
+
+  --accent: #2e5bd6;
+  --accent-soft: #e9eefc;
+  --ok: #137a50;
+  --ok-soft: #e5f4ec;
+  --warn: #935600;
+  --warn-soft: #fbf0dc;
+  --bad: #be2f28;
+  --bad-soft: #fbe8e6;
+
+  /* One hue per project group. Always shown next to the group's name, never alone. */
+  --g-desktop: #0d8574;
+  --g-game: #5b7f0e;
+  --g-onchain: #2c78bd;
+  --g-mini-app: #7650d2;
+  --g-tool: #b8327a;
+  --g-archive: #62626b;
+
+  --scrim: rgba(14, 14, 16, 0.4);
+  --shadow-popover: 0 8px 24px rgba(14, 14, 16, 0.12);
+
+  --dots: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect x='11' y='11' width='1.5' height='1.5' fill='%23c4c4cb'/%3E%3C/svg%3E");
+  --tick-mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M.5 8V.5H8' fill='none' stroke='%23000'/%3E%3C/svg%3E") top left / 8px 8px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 .5h7.5V8' fill='none' stroke='%23000'/%3E%3C/svg%3E") top right / 8px 8px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M.5 0v7.5H8' fill='none' stroke='%23000'/%3E%3C/svg%3E") bottom left / 8px 8px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 7.5h7.5V0' fill='none' stroke='%23000'/%3E%3C/svg%3E") bottom right / 8px 8px no-repeat;
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 240ms;
 }
 
-* {
-  box-sizing: border-box;
+/* Dark values live in one place and are applied twice: explicit choice, and system preference. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e0e10;
+  --surface: #151517;
+  --raised: #1c1c1f;
+  --sunken: #0a0a0b;
+  --border: #26262b;
+  --tick: #3a3a41;
+  --border-strong: #62626c;
+  --text: #ededef;
+  --text-secondary: #a6a6ae;
+  --text-muted: #8c8c95;
+  --inverse-bg: #ededef;
+  --inverse-fg: #0e0e10;
+  --accent: #7aa2ff;
+  --accent-soft: #172036;
+  --ok: #4cc38a;
+  --ok-soft: #11251b;
+  --warn: #f0b44c;
+  --warn-soft: #2a2112;
+  --bad: #f47a72;
+  --bad-soft: #2c1514;
+  --g-desktop: #35b8a4;
+  --g-game: #a3d14f;
+  --g-onchain: #5da9ec;
+  --g-mini-app: #a585f2;
+  --g-tool: #f07ab4;
+  --g-archive: #8c8c95;
+  --scrim: rgba(0, 0, 0, 0.7);
+  --shadow-popover: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --dots: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect x='11' y='11' width='1.5' height='1.5' fill='%2332323a'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0e0e10;
+    --surface: #151517;
+    --raised: #1c1c1f;
+    --sunken: #0a0a0b;
+    --border: #26262b;
+    --tick: #3a3a41;
+    --border-strong: #62626c;
+    --text: #ededef;
+    --text-secondary: #a6a6ae;
+    --text-muted: #8c8c95;
+    --inverse-bg: #ededef;
+    --inverse-fg: #0e0e10;
+    --accent: #7aa2ff;
+    --accent-soft: #172036;
+    --ok: #4cc38a;
+    --ok-soft: #11251b;
+    --warn: #f0b44c;
+    --warn-soft: #2a2112;
+    --bad: #f47a72;
+    --bad-soft: #2c1514;
+    --g-desktop: #35b8a4;
+    --g-game: #a3d14f;
+    --g-onchain: #5da9ec;
+    --g-mini-app: #a585f2;
+    --g-tool: #f07ab4;
+    --g-archive: #8c8c95;
+    --scrim: rgba(0, 0, 0, 0.7);
+    --shadow-popover: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --dots: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect x='11' y='11' width='1.5' height='1.5' fill='%2332323a'/%3E%3C/svg%3E");
+  }
 }
 
+@theme inline {
+  --color-canvas: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-line: var(--border);
+  --color-line-tick: var(--tick);
+  --color-line-strong: var(--border-strong);
+  --color-ink: var(--text);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+  --color-inverse: var(--inverse-bg);
+  --color-inverse-fg: var(--inverse-fg);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-scrim: var(--scrim);
+
+  --font-sans: var(--ff-body), "Geist", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--ff-mono), "Geist Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+  /* Nothing is rounded except status dots. */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+
+  --shadow-popover: var(--shadow-popover);
+}
+
+@utility scroll-mt-header {
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+@layer base {
+  /* Dust canvases live in a body-level layer, so the body is their containing block. */
+  body {
+    position: relative;
+  }
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+}
 html {
   scroll-behavior: smooth;
 }
-
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  text-rendering: geometricPrecision;
+  font-family: var(--ff-body), "Geist", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
-
+/* Drafting dots across the sheet. They never move; the motion on this site belongs to the type. */
 body::before {
   content: "";
-  pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: 50;
-  opacity: 0.018;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  mix-blend-mode: screen;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--dots);
+  background-size: 24px 24px;
 }
-
 ::selection {
-  background: #d8d8d8;
-  color: #121212;
+  background: var(--accent);
+  color: var(--inverse-fg);
 }
-
 a,
 button {
   -webkit-tap-highlight-color: transparent;
 }
+button {
+  cursor: pointer;
+}
 
+@layer components {
+  /* ---------- Typography ---------- */
+  .num,
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+  .display {
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+  .display-medium {
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+  .label {
+    font-family: var(--ff-mono), "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  /* Numbered eyebrow: the index in ink, the label, then a rule to the edge of its column. */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ff-mono), "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .eyebrow .n {
+    color: var(--text);
+  }
+  .eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .eyebrow.bare::after {
+    display: none;
+  }
+
+  /* The wordmark is sized against its own row, so it always spans the frame. */
+  .wordmark-row {
+    container-type: inline-size;
+  }
+  .wordmark {
+    font-weight: 700;
+    font-size: 22.8cqw;
+    line-height: 0.82;
+    letter-spacing: -0.07em;
+    white-space: nowrap;
+  }
+
+  .dot {
+    display: inline-block;
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--c, var(--text-muted));
+  }
+  .dotgrid {
+    background-image: var(--dots);
+    background-size: 24px 24px;
+  }
+
+  /* ---------- Frames with corner ticks ---------- */
+  /* One masked pseudo-element draws all four corners, so no extra markup is needed. */
+  .frame,
+  .btn,
+  .seg {
+    position: relative;
+  }
+  .frame::before,
+  .btn::before,
+  .seg::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 1;
+    pointer-events: none;
+    background: var(--tk, var(--text-muted));
+    -webkit-mask: var(--tick-mask);
+    mask: var(--tick-mask);
+  }
+  .frame {
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  /* A frame that is a link brightens its ticks in the colour of what it leads to. */
+  .frame-link {
+    transition: border-color var(--dur-fast) var(--ease);
+  }
+  .frame-link:hover,
+  .frame-link:focus-within {
+    --tk: var(--c, var(--text));
+    border-color: var(--border-strong);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    font-family: var(--ff-mono), "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--text);
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .btn svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+  .btn:hover {
+    background: var(--raised);
+    --tk: var(--text);
+  }
+  /* The one main action of a view: inverted ink, with its ticks standing outside the fill. */
+  .btn-primary {
+    background: var(--inverse-bg);
+    border-color: var(--inverse-bg);
+    color: var(--inverse-fg);
+    --tk: var(--text-secondary);
+  }
+  .btn-primary:hover {
+    background: var(--inverse-bg);
+    opacity: 0.92;
+    --tk: var(--text);
+  }
+  .btn-primary::before {
+    inset: -4px;
+  }
+  .btn-lg {
+    height: 44px;
+    padding: 0 20px;
+    font-size: 13px;
+    gap: 10px;
+  }
+  .btn-lg svg {
+    width: 16px;
+    height: 16px;
+  }
+  .btn-primary.btn-lg::before {
+    inset: -5px;
+  }
+  .btn-sm {
+    height: 32px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  /* Low-emphasis action: bracket text, no frame. */
+  .btn-ghost {
+    height: auto;
+    padding: 2px 4px;
+    gap: 6px;
+    border-color: transparent;
+    color: var(--text-secondary);
+  }
+  .btn-ghost:hover {
+    background: none;
+    color: var(--c, var(--text));
+  }
+  .btn-ghost::before,
+  .btn-ghost::after {
+    content: "[";
+    position: static;
+    inset: auto;
+    z-index: auto;
+    background: none;
+    -webkit-mask: none;
+    mask: none;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .btn-ghost::after {
+    content: "]";
+  }
+
+  /* ---------- Segmented control ---------- */
+  .seg {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .seg button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 28px;
+    padding: 0 11px;
+    font-family: var(--ff-mono), "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .seg button:hover {
+    color: var(--text);
+  }
+  .seg button[aria-pressed="true"] {
+    background: var(--raised);
+    color: var(--text);
+    box-shadow: inset 0 0 0 1px var(--border-strong);
+  }
+
+  /* ---------- Badges ---------- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    border: 1px solid var(--border-strong);
+    font-family: var(--ff-mono), "Geist Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--text-secondary);
+  }
+  .badge svg {
+    width: 11px;
+    height: 11px;
+  }
+  .badge-ok {
+    border-color: transparent;
+    background: var(--ok-soft);
+    color: var(--ok);
+  }
+  .badge-info {
+    border-color: transparent;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .badge-warn {
+    border-color: transparent;
+    background: var(--warn-soft);
+    color: var(--warn);
+  }
+
+  /* ---------- Rows ---------- */
+  /* Row hover: a rail on the left in the colour of the row's group. */
+  .rail {
+    position: relative;
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .rail::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--c, var(--text));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dur-base) var(--ease);
+  }
+  .rail:hover::after,
+  .rail:focus-within::after {
+    transform: scaleY(1);
+  }
+
+  /* ---------- Dust ---------- */
+  .dust-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .dust-layer[data-level="top"] {
+    z-index: 45;
+  }
+  .dust-layer canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .grain-hud {
+    opacity: 0;
+    transition: opacity var(--dur-slow) var(--ease);
+  }
+  .grain-hud[data-active="true"] {
+    opacity: 1;
+  }
+}
+
+/* While an element is drawn as grains its real text stays in the DOM, only unpainted. */
+[data-dust-root],
+[data-dust-skip] {
+  -webkit-text-fill-color: currentcolor;
+}
+[data-dust-hidden] {
+  -webkit-text-fill-color: transparent !important;
+}
+[data-dust-frame-hidden] {
+  border-color: transparent !important;
+}
+[data-dust-image-hidden] {
+  opacity: 0 !important;
+}
+/* The intro type waits unpainted for its grains; if scripts never run it shows itself. */
+[data-dust-intro] {
+  -webkit-text-fill-color: transparent;
+  animation: dust-intro-fallback 1ms linear 3s forwards;
+}
+@keyframes dust-intro-fallback {
+  to {
+    -webkit-text-fill-color: currentcolor;
+  }
+}
+html[data-dust="off"] [data-dust-intro] {
+  -webkit-text-fill-color: currentcolor;
+  animation: none;
+}
+/* Colour transitions would be captured half-way when the theme flips. */
+html[data-theme-switching] *,
+html[data-theme-switching] *::before,
+html[data-theme-switching] *::after {
+  transition: none !important;
+}
+
+/* The dust switch shows its state without waiting for React: the attribute or the system setting decides. */
+.dust-on,
+.dust-off {
+  display: none;
+}
+html[data-dust="on"] .dust-on,
+html[data-dust="off"] .dust-off {
+  display: inline;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-dust]) .dust-on {
+    display: inline;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-dust]) .dust-off {
+    display: inline;
+  }
+}
+
+/* ---------- Focus ---------- */
 :focus-visible {
-  outline: 1px solid #d7d7d7;
-  outline-offset: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.split-word,
-.blur-word {
-  display: inline-block;
-  animation-fill-mode: both;
-}
-
-.split-word {
-  animation-name: split-rise;
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.blur-word {
-  animation-name: blur-in;
-  animation-duration: 620ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card-description {
-  display: -webkit-box;
-  min-height: 3.75rem;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
-@keyframes split-rise {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes blur-in {
-  from {
-    opacity: 0;
-    filter: blur(4px);
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0);
-  }
-}
-
-.logo-track {
-  animation: logo-loop 18s linear infinite;
-  will-change: transform;
-}
-
-.logo-set {
-  min-width: max-content;
-}
-
-@keyframes logo-loop {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
+/* ---------- Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-
   *,
   *::before,
   *::after {
-    animation-duration: 1ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
   }
+  html:not([data-dust="on"]) [data-dust-intro] {
+    -webkit-text-fill-color: currentcolor;
+    animation: none;
+  }
+}
 
-  .logo-track {
-    animation-duration: 36s !important;
-    animation-iteration-count: infinite !important;
-    animation-name: logo-loop !important;
-    animation-timing-function: linear !important;
-  }
+/* ---------- Scrollbar ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
 }

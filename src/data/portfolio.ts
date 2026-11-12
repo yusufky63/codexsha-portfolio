@@ -1,609 +1,177 @@
-export type ProjectLink = {
-  label: string;
-  href: string;
-};
+import { createHash } from "node:crypto";
+import { archive } from "@/data/archive";
+import { desktop } from "@/data/desktop";
+import { games } from "@/data/games";
+import activity from "@/data/github-activity.json";
+import snapshot from "@/data/github-repos.json";
+import { miniApps } from "@/data/mini-apps";
+import { onchain } from "@/data/onchain";
+import { tools } from "@/data/tools";
+import type { Project, ProjectGroup } from "@/data/types";
 
-export type Project = {
-  slug: string;
-  title: string;
+export type IndexedProject = Project & {
+  /** Position in the catalogue, zero-padded. */
   index: string;
-  category: string;
-  summary: string;
-  description: string;
-  features: string[];
-  stack: string[];
-  links: ProjectLink[];
-  status: string;
-  role: string;
-  architecture: string;
-  privateNote?: string;
+  /** First seven hex characters of sha256(slug): the "sha" half of the name. */
+  sha: string;
+  stars: number;
 };
 
-export type CompactProject = {
-  slug: string;
-  index: string;
+export type ArchiveEntry = {
+  repo: string;
   title: string;
-  category: string;
   description: string;
-  features: string[];
   stack: string[];
-  links: ProjectLink[];
-  status: string;
-  role: string;
-  architecture: string;
+  year: number;
+  url: string;
+  homepage: string | null;
+  stars: number;
 };
 
-export type CapabilityGroup = {
-  title: string;
-  items: string[];
-};
-
-export type Stat = {
-  label: string;
-  value: number;
-  suffix?: string;
-};
-
-export const socialLinks: ProjectLink[] = [
-  { label: "GitHub", href: "https://github.com/yusufky63" },
-  { label: "X", href: "https://x.com/codexsha" },
-  { label: "Telegram", href: "https://t.me/codexsha" },
-  { label: "zkCodex", href: "https://zkcodex.com" }
-];
-
-export const stats: Stat[] = [
-  { label: "repositories", value: 70 },
-  { label: "private builds", value: 22 },
-  { label: "own projects", value: 53 },
-  { label: "public repos", value: 31 }
-];
-
-export const featuredProjects: Project[] = [
-  {
-    slug: "zkcodex",
-    title: "zkCodex",
-    index: "01",
-    category: "Founder Project / Wallet Analytics",
-    summary:
-      "Multi-chain wallet analytics and DeFi tools platform for understanding wallet activity, portfolio behavior, and on-chain opportunities.",
-    description:
-      "zkCodex helps users analyze wallet activity across EVM networks, inspect transaction history, track asset behavior, discover airdrop-style opportunities, and use contract interaction tools from one product surface.",
-    features: [
-      "Wallet analytics across 35+ EVM networks",
-      "Wallet scoring, transaction activity, and asset overview",
-      "Airdrop opportunity discovery and eligibility-style tracking",
-      "Stats API for transaction, DeFi, NFT, and scoring data",
-      "Farcaster Mini App for mobile-first wallet checks"
-    ],
-    stack: [
-      "React",
-      "TypeScript",
-      "Tailwind",
-      "Wagmi",
-      "Viem",
-      "Ethers",
-      "RainbowKit",
-      "Reown AppKit",
-      "Express",
-      "Firebase",
-      "Chart.js",
-      "Redux",
-      "Three.js",
-      "Circle",
-      "Li.Fi",
-      "Vercel"
-    ],
-    links: [
-      { label: "Live", href: "https://zkcodex.com" },
-      { label: "GitHub", href: "https://github.com/zkcodex/Introduction-zkCodex" }
-    ],
-    status: "Live platform with private app, public intro repository, API services, and Farcaster mini app work.",
-    role: "Founder and product builder across product direction, frontend, backend APIs, wallet analytics flows, and deployment.",
-    architecture:
-      "Main React application, dedicated wallet statistics API, Farcaster mini app surface, wallet connection layer, and external on-chain data integrations."
-  },
-  {
-    slug: "baseplay",
-    title: "BasePlay",
-    index: "02",
-    category: "Private Product / On-chain Gaming",
-    summary:
-      "Base-native on-chain gaming platform with provably fair mini games, real stakes, instant payouts, and admin tooling.",
-    description:
-      "BasePlay is a compact gaming platform for Base mainnet. It combines a Next.js frontend, backend event handling, Supabase data, Solidity game contracts, vault logic, and Chainlink VRF randomness.",
-    features: [
-      "Game library with Coin Flip, Dice, Crash, Mines, Slots, Wheel, and more",
-      "Base mainnet direction with small real-stake bets",
-      "Vault architecture, payout logic, and game contracts",
-      "Chainlink VRF randomness and Hardhat tests",
-      "Backend event listener, WebSocket updates, and admin pages"
-    ],
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind",
-      "Wagmi",
-      "Viem",
-      "Supabase",
-      "Socket.io",
-      "Solidity",
-      "Chainlink",
-      "OpenZeppelin",
-      "Hardhat",
-      "WalletConnect",
-      "Framer Motion",
-      "Node.js",
-      "Express"
-    ],
-    links: [{ label: "Live", href: "https://baseplay.games" }],
-    status: "Private repository, public live deployment.",
-    role: "Full-stack product builder across game UX, contract architecture, backend events, database flows, and deployment.",
-    architecture:
-      "Monorepo with frontend, backend, contracts, and shared packages. Contracts handle game settlement and vault safety while backend services coordinate events and realtime product state.",
-    privateNote:
-      "Private implementation details are represented by product behavior and stack only."
-  },
-  {
-    slug: "drawcoin",
-    title: "DrawCoin",
-    index: "03",
-    category: "AI + Creator Economy / Base",
-    summary:
-      "Create and trade art-backed coins on Base using hand-drawn artwork or AI-generated visuals in a Farcaster-ready product flow.",
-    description:
-      "DrawCoin lets creators draw or generate artwork, turn it into a tradeable coin through Zora infrastructure, and share the experience through Base and Farcaster-friendly surfaces.",
-    features: [
-      "Interactive drawing canvas and AI art generation",
-      "Tradeable art-backed coin creation through Zora infrastructure",
-      "Base network support for low-cost transactions",
-      "Farcaster Mini App and BaseApp compatibility",
-      "Supabase-backed data layer and IPFS-style asset flow"
-    ],
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind",
-      "Farcaster",
-      "Zora SDK",
-      "Wagmi",
-      "Viem",
-      "Supabase",
-      "Google Gemini",
-      "Upstash Redis",
-      "Ethers",
-      "Tldraw",
-      "Recharts"
-    ],
-    links: [
-      { label: "Live", href: "https://drawcoin-mini.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/drawcoin" }
-    ],
-    status: "Public repository and live mini app deployment.",
-    role: "Built the product flow, drawing/token creation UI, AI-assisted generation path, Web3 integration, and deployment.",
-    architecture:
-      "Next.js application with Farcaster integration, wallet/on-chain libraries, Zora SDK flows, AI generation services, Supabase persistence, and asset upload pipeline."
-  },
-  {
-    slug: "abonely",
-    title: "Abonely",
-    index: "04",
-    category: "Mobile App / Consumer SaaS",
-    summary:
-      "Privacy-first subscription tracker for managing recurring payments, reminders, spending insights, and multi-currency subscription data.",
-    description:
-      "Abonely is a mobile-first consumer app for tracking subscriptions without connecting bank accounts. It focuses on offline-first data, reminders, spending clarity, localization, and optional cloud sync.",
-    features: [
-      "Add, edit, archive, and analyze subscriptions",
-      "Monthly and yearly spending dashboard",
-      "Payment reminders with configurable offsets",
-      "Multi-currency support and 50+ service catalog",
-      "Offline-first storage with optional Supabase sync"
-    ],
-    stack: [
-      "Expo",
-      "React Native",
-      "TypeScript",
-      "Zustand",
-      "WatermelonDB",
-      "Supabase",
-      "Google Sign-In",
-      "Sentry",
-      "FlashList"
-    ],
-    links: [
-      { label: "Live", href: "https://abonely-web.vercel.app" },
-      {
-        label: "App Store",
-        href: "https://apps.apple.com/tr/app/abonely-subscription-tracker/id6762087754"
-      }
-    ],
-    status: "Private mobile app repository with companion web deployment.",
-    role: "Product builder across mobile UX, offline-first data model, sync architecture, auth, localization, and release planning.",
-    architecture:
-      "Expo mobile app with local WatermelonDB storage, Zustand state, Supabase Auth and sync, reminder flows, iOS widget work, and companion web presence.",
-    privateNote:
-      "Private repository details are summarized without exposing sensitive implementation data."
-  }
-];
-
-export const miniApps: CompactProject[] = [
-  {
-    slug: "farsender",
-    index: "05",
-    title: "FarSender",
-    category: "Farcaster Mini App / Multisender",
-    description:
-      "Farcaster Mini App for sending ETH and ERC-20 tokens to multiple recipients across Base and Optimism.",
-    features: [
-      "Multi-recipient ETH and ERC-20 sending",
-      "Base and Optimism network support",
-      "Farcaster Mini App context",
-      "Mobile-first wallet action flow"
-    ],
-    stack: ["Next.js", "Farcaster SDK", "Neynar", "Wagmi", "Viem"],
-    links: [
-      { label: "Live", href: "https://farsender.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/farsender" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the mini app flow, wallet integration, token action UI, and deployment.",
-    architecture:
-      "Next.js app using Farcaster Mini App SDK, Neynar, Wagmi, Viem, and smart contract based multisend flows."
-  },
-  {
-    slug: "8bitminter",
-    index: "06",
-    title: "8bitMinter",
-    category: "Farcaster Mini App / Token Creator",
-    description:
-      "Retro-styled token creator for Farcaster and Base with AI-assisted content and Zora SDK flows.",
-    features: [
-      "Retro-styled token creation interface",
-      "AI-assisted token content and visuals",
-      "Zora SDK creation flow",
-      "Farcaster-ready mobile UX"
-    ],
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Farcaster",
-      "Google Gemini",
-      "Supabase",
-      "Upstash Redis",
-      "Zora SDK",
-      "Ethers",
-      "Wagmi",
-      "Viem"
-    ],
-    links: [
-      { label: "Live", href: "https://8bitminter.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/8bitminter" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built token creation UX, AI-assisted generation flow, Web3 integration, and deploy pipeline.",
-    architecture:
-      "Next.js and TypeScript mini app with Farcaster SDK, Zora SDK, wallet libraries, AI services, and Supabase persistence."
-  },
-  {
-    slug: "base-2048",
-    index: "07",
-    title: "Base 2048",
-    category: "Game / Base Mini App",
-    description:
-      "Base-themed 2048 game with score tracking, local persistence, timer, undo, and leaderboard hooks.",
-    features: [
-      "4x4 2048 gameplay",
-      "Score, timer, undo, and local best score",
-      "Base-themed visual language",
-      "Leaderboard and on-chain hook preparation"
-    ],
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "OnchainKit",
-      "Farcaster",
-      "Neynar",
-      "Ethers",
-      "Wagmi",
-      "Viem",
-      "Axios"
-    ],
-    links: [
-      { label: "Live", href: "https://base-2048.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/base-2048" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the game UI, state handling, score flow, and Farcaster/Base-ready integration points.",
-    architecture:
-      "Next.js game client with local state, Base design system treatment, Farcaster metadata, and placeholder on-chain score hooks."
-  },
-  {
-    slug: "base-counter",
-    index: "08",
-    title: "Base Counter",
-    category: "On-chain Counter / Base",
-    description:
-      "On-chain counter experience for Base with wallet connection, leaderboard UI, and Farcaster sharing.",
-    features: [
-      "Base-only counter interaction",
-      "Wallet connection and network switching",
-      "Leaderboard UI",
-      "Farcaster sharing flow"
-    ],
-    stack: [
-      "Next.js",
-      "Farcaster SDK",
-      "Wagmi",
-      "Viem",
-      "Ethers",
-      "React Query",
-      "Ox"
-    ],
-    links: [
-      { label: "Live", href: "https://counter-base.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/base-counter" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the counter UI, wallet flow, contract interaction path, leaderboard presentation, and Farcaster share action.",
-    architecture:
-      "Next.js app with Farcaster Mini App SDK, Wagmi/Viem/Ethers wallet tooling, contract ABI integration, and leaderboard state."
-  },
-  {
-    slug: "frevoke",
-    index: "09",
-    title: "Frevoke",
-    category: "Security Utility / Base",
-    description:
-      "Base token approval revoke mini app for inspecting and revoking approvals from a mobile-first UI.",
-    features: [
-      "Token approval inspection",
-      "Approval revoke flow",
-      "Base Blockscout data integration",
-      "Mobile-first Farcaster interface"
-    ],
-    stack: [
-      "Next.js",
-      "OnchainKit",
-      "Farcaster",
-      "Wagmi",
-      "Viem",
-      "Axios",
-      "Blockscout"
-    ],
-    links: [
-      { label: "Live", href: "https://frevoke.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/frevoke" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the approval inspection UI, revoke transaction flow, wallet integration, and Base-focused utility experience.",
-    architecture:
-      "Next.js mini app using OnchainKit, Wagmi, Viem, Farcaster SDK, and Blockscout API without a persistent backend."
-  },
-  {
-    slug: "cosmic-raid",
-    index: "10",
-    title: "Cosmic Raid",
-    category: "Arcade Game / Farcaster",
-    description:
-      "Farcaster arcade game experiment with wallet integration, mobile layout, and leaderboard-oriented UI.",
-    features: [
-      "Arcade shooter-style UI",
-      "Wallet connect/disconnect flow",
-      "Mobile Farcaster layout",
-      "Leaderboard-oriented product surface"
-    ],
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Farcaster SDK",
-      "Wagmi",
-      "Viem",
-      "Ethers",
-      "React Query",
-      "Axios"
-    ],
-    links: [
-      { label: "Live", href: "https://cosmic-raid.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/cosmic-raid" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the game-facing UI, Farcaster initialization, wallet integration, and responsive product shell.",
-    architecture:
-      "Next.js and TypeScript mini app with Farcaster SDK, wallet hooks, mobile game layout, and leaderboard-oriented components."
-  }
-];
-
-export const tools: CompactProject[] = [
-  {
-    slug: "cellforge",
-    index: "11",
-    title: "CellForge",
-    category: "Open Source UI Library",
-    description:
-      "Open-source React loader system with animated cell-based primitives, a live tuning studio, shadcn-style registry, and npm runtime package.",
-    features: [
-      "71 installable loader items generated from a local registry",
-      "Gallery for loader families and quick install commands",
-      "Studio for tuning color, shape, pattern, size, speed, padding, frames, and generated code",
-      "shadcn-style source registry for editable component installs",
-      "npm runtime package with reduced-motion handling and CSS-only animation paths"
-    ],
-    stack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind",
-      "shadcn/ui",
-      "Framer Motion",
-      "Vitest",
-      "npm",
-      "Vercel"
-    ],
-    links: [
-      { label: "Live", href: "https://cellforge.dev" },
-      { label: "GitHub", href: "https://github.com/cellforge-dev/cellforge" }
-    ],
-    status: "Public organization repository, live documentation site, registry, and npm package.",
-    role: "Built the loader primitive system, public docs, tuning studio, registry generation workflow, package distribution, and validation pipeline.",
-    architecture:
-      "Next.js site with docs, gallery, studio, playground, generated shadcn registry files, source loader primitives, package build output, Vitest coverage, and consumer smoke checks."
-  },
-  {
-    slug: "visionz-ai",
-    index: "12",
-    title: "VisionZ AI",
-    category: "AI + Web3 Tooling",
-    description:
-      "AI-powered token creation and discovery platform with generated metadata, images, market views, and trading-oriented pages.",
-    features: [
-      "AI token idea and metadata generation",
-      "Image-assisted token creation",
-      "Market discovery views",
-      "Trading-oriented token pages"
-    ],
-    stack: [
-      "Next.js",
-      "Zora SDK",
-      "Supabase",
-      "Hugging Face",
-      "Replicate",
-      "Wagmi",
-      "Viem",
-      "Ethers",
-      "ConnectKit",
-      "Vercel"
-    ],
-    links: [
-      { label: "Live", href: "https://vision-z-ai.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/VisionZ-AI" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the token generation UX, AI integration surface, market views, and Zora/Web3 integration.",
-    architecture:
-      "Next.js application with Zora SDK, Supabase, Hugging Face, Wagmi, Ethers, and trading/discovery UI modules."
-  },
-  {
-    slug: "lexoraft",
-    index: "13",
-    title: "Lexoraft",
-    category: "AI Learning App",
-    description:
-      "English/Turkish learning app with vocabulary cards, practice flows, quiz review, AI translation, and writing feedback.",
-    features: [
-      "Vocabulary cards with examples and Turkish translations",
-      "Practice center for mistakes, grammar, speaking, writing, and listening",
-      "AI translation coach with grammar notes and recall prompts",
-      "Progress, favorites, quiz misses, drafts, and provider settings",
-      "Controlled AI content generation with validation and duplicate reduction"
-    ],
-    stack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind",
-      "Zod",
-      "DeepSeek",
-      "OpenAI",
-      "Browser TTS",
-      "Vercel"
-    ],
-    links: [
-      { label: "Live", href: "https://english-learning-ai.vercel.app" },
-      { label: "GitHub", href: "https://github.com/yusufky63/english-learning" }
-    ],
-    status: "Public repository and live deployment.",
-    role: "Built the learning workspace, progress model, AI provider settings, practice flows, and production deployment.",
-    architecture:
-      "Next.js App Router application with browser-local persistence, server AI provider adapters, Zod validation, security checks, rate limits, and browser speech/TTS flows."
-  },
-  {
-    slug: "youtube-shorts-pipeline",
-    index: "14",
-    title: "YouTube Shorts Pipeline",
-    category: "AI Media Automation",
-    description:
-      "Streamlit video pipeline for analysis, Turkish narration, ElevenLabs voiceover, ASS/SRT subtitles, and FFmpeg rendering.",
-    features: [
-      "Video analysis and script generation",
-      "ElevenLabs voiceover",
-      "ASS/SRT subtitle generation",
-      "FFmpeg Shorts rendering pipeline"
-    ],
-    stack: ["Python", "Streamlit", "Google Gemini", "ElevenLabs", "FFmpeg"],
-    links: [
-      {
-        label: "GitHub",
-        href: "https://github.com/yusufky63/youtube-shorts-video-pipeline"
-      }
-    ],
-    status: "Public repository.",
-    role: "Built the video processing workflow, AI narration path, subtitle pipeline, and render automation.",
-    architecture:
-      "Python and Streamlit tool that coordinates Gemini analysis, ElevenLabs TTS, subtitle generation, and FFmpeg rendering."
-  }
-];
-
-export const capabilities: CapabilityGroup[] = [
-  {
-    title: "Product",
-    items: [
-      "Wallet analytics",
-      "Farcaster Mini Apps",
-      "On-chain games",
-      "AI creator tools",
-      "Mobile subscription tracking"
-    ]
-  },
-  {
-    title: "Frontend",
-    items: ["Next.js", "React", "TypeScript", "Tailwind", "Mobile-first UI"]
-  },
-  {
-    title: "Web3",
-    items: ["Wagmi", "Viem", "Ethers", "Zora", "OnchainKit", "Solidity"]
-  },
-  {
-    title: "Backend",
-    items: ["Node.js", "Express", "Supabase", "Redis", "REST APIs", "Socket.io"]
-  },
-  {
-    title: "Mobile + AI",
-    items: ["Expo", "React Native", "WatermelonDB", "Gemini", "ElevenLabs"]
-  }
-];
-
-export function getFeaturedProject(slug: string) {
-  return allProjects.find((project) => project.slug === slug);
+/** CSS custom property that holds a group's hue; defined per theme in globals.css. */
+export function groupColor(group: ProjectGroup | "archive") {
+  return `var(--g-${group})`;
 }
 
-export const allProjects: Project[] = [
-  ...featuredProjects,
-  ...miniApps.map((project) => ({
-    slug: project.slug,
-    title: project.title,
-    index: project.index,
-    category: project.category,
-    summary: project.description,
-    description: project.description,
-    features: project.features,
-    stack: project.stack,
-    links: project.links,
-    status: project.status,
-    role: project.role,
-    architecture: project.architecture
-  })),
-  ...tools.map((project) => ({
-    slug: project.slug,
-    title: project.title,
-    index: project.index,
-    category: project.category,
-    summary: project.description,
-    description: project.description,
-    features: project.features,
-    stack: project.stack,
-    links: project.links,
-    status: project.status,
-    role: project.role,
-    architecture: project.architecture
-  }))
+export const groups: Array<{ key: ProjectGroup; label: string; blurb: string }> = [
+  {
+    key: "desktop",
+    label: "Apps & extensions",
+    blurb: "Open-source desktop apps in Rust and Tauri, a mobile app, and browser extensions that run on your own keys."
+  },
+  {
+    key: "game",
+    label: "Games",
+    blurb: "Stick figure strategy and action games on the App Store and Google Play, and a cube-built 3D strategy game."
+  },
+  {
+    key: "onchain",
+    label: "Onchain",
+    blurb: "Wallet analytics, DeFi interfaces, an onchain game platform, name services, routers and developer kits."
+  },
+  {
+    key: "mini-app",
+    label: "Mini apps",
+    blurb: "Farcaster and Base mini apps for fast wallet actions, games and token creation."
+  },
+  {
+    key: "tool",
+    label: "AI & tools",
+    blurb: "AI apps and an open-source UI library."
+  }
 ];
+
+const repoByName = new Map(snapshot.repos.map((repo) => [repo.name, repo]));
+
+/** The five shown first on the home page, in this order. They keep their own group and colour. */
+const FLAGSHIP = ["zkcodex", "bstocks", "baseplay", "downpipe", "reclaim-cleaner"];
+
+const byGroup: Project[] = [...desktop, ...games, ...onchain, ...miniApps, ...tools];
+
+// The flagship five open the catalogue, so their numbers read 01 to 05 wherever they appear.
+const ordered: Project[] = [
+  ...FLAGSHIP.flatMap((slug) => byGroup.filter((project) => project.slug === slug)),
+  ...byGroup.filter((project) => !FLAGSHIP.includes(project.slug))
+];
+
+export const projects: IndexedProject[] = ordered.map((project, position) => ({
+  ...project,
+  index: String(position + 1).padStart(2, "0"),
+  sha: createHash("sha256").update(project.slug).digest("hex").slice(0, 7),
+  stars: project.repo ? (repoByName.get(project.repo)?.stars ?? 0) : 0
+}));
+
+export const pinned = projects.filter((project) => project.pinned);
+
+export const flagship = projects.filter((project) => FLAGSHIP.includes(project.slug));
+
+export function projectsIn(group: ProjectGroup) {
+  return projects.filter((project) => project.group === group);
+}
+
+export function getProject(slug: string) {
+  return projects.find((project) => project.slug === slug);
+}
+
+/** Previous and next entries in catalogue order, wrapping at both ends. */
+export function neighbours(slug: string) {
+  const position = projects.findIndex((project) => project.slug === slug);
+  return {
+    previous: projects[(position - 1 + projects.length) % projects.length],
+    next: projects[(position + 1) % projects.length]
+  };
+}
+
+// Repositories that were renamed or deleted since the snapshot simply drop out of the archive.
+export const archiveEntries: ArchiveEntry[] = archive.flatMap((seed) => {
+  const repo = repoByName.get(seed.repo);
+  if (!repo) return [];
+  return [
+    {
+      ...seed,
+      year: Number(repo.createdAt.slice(0, 4)),
+      url: repo.url,
+      homepage: repo.homepage,
+      stars: repo.stars
+    }
+  ];
+});
+
+const years = [...projects.map((project) => project.year), ...archiveEntries.map((entry) => entry.year)];
+export const span = { from: Math.min(...years), to: Math.max(...years) };
+
+export const stats = [
+  { value: projects.length + archiveEntries.length, label: "projects indexed" },
+  {
+    value: projects.filter((project) => project.links.some((link) => link.label === "Live")).length,
+    label: "live deployments"
+  },
+  { value: snapshot.publicCount, label: "public repositories" },
+  { value: activity.ranges[0].total, label: "contributions, last 12 months" }
+];
+
+/** Share of the whole catalogue held by each group, archive included: the hero's pixel bar. */
+export const composition = [
+  ...groups.map((group) => ({
+    key: group.key as string,
+    label: group.label,
+    count: projects.filter((project) => project.group === group.key).length
+  })),
+  { key: "archive", label: "Archive", count: archiveEntries.length }
+];
+
+/** How many catalogued projects use each technology, most used first. */
+export const stackTally = (() => {
+  const counts = new Map<string, number>();
+  for (const project of projects) {
+    for (const item of project.stack) counts.set(item, (counts.get(item) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+})();
+
+/**
+ * Groups on one side, the most used technologies on the other, and one edge
+ * for every pair that shares at least one project: the stack map.
+ */
+export const stackMap = (() => {
+  const tools = stackTally.slice(0, 8);
+  const edges = groups.flatMap((group) =>
+    tools.flatMap((tool) => {
+      const count = projects.filter(
+        (project) => project.group === group.key && project.stack.includes(tool.name)
+      ).length;
+      return count > 0 ? [{ group: group.key as string, tool: tool.name, count }] : [];
+    })
+  );
+  return {
+    groups: groups.map((group) => ({
+      key: group.key as string,
+      label: group.label,
+      count: projects.filter((project) => project.group === group.key).length
+    })),
+    tools,
+    edges
+  };
+})();

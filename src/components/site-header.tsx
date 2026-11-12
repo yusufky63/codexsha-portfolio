@@ -1,30 +1,29 @@
 import Link from "next/link";
-import { GitHubMark, TelegramMark, XMark } from "@/components/social-icons";
-import { socialLinks } from "@/data/portfolio";
-
-const navItems = [
-  { label: "Projects", href: "/projects" },
-  { label: "Mini Apps", href: "/#mini-apps" },
-  { label: "Stack", href: "/#stack" },
-  { label: "Contact", href: "/#contact" }
-];
+import { DustToggle } from "@/components/dust/dust-toggle";
+import { ThemeToggle } from "@/components/dust/theme-toggle";
+import { SocialIcon } from "@/components/social-icons";
+import { navLinks, site, socialLinks } from "@/lib/site";
 
 export function SiteHeader() {
-  const headerLinks = socialLinks.filter((link) => link.label !== "zkCodex");
+  const iconLinks = socialLinks.filter((link) => link.label !== "zkCodex");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#242424] bg-[#121212]/90 backdrop-blur-md">
-      <div className="mx-auto flex h-[52px] max-w-[1080px] items-center justify-between px-4 md:px-6">
-        <Link
-          className="font-mono text-[13px] font-medium uppercase tracking-[0.14em] text-[#e6e6e6]"
-          href="/"
-        >
-          Codexsha
+    <header className="sticky top-0 z-40 border-b border-line bg-canvas">
+      <div className="mx-auto flex h-14 max-w-[1320px] items-center gap-4 px-4 md:gap-6 md:px-7">
+        <Link className="inline-flex items-center gap-2.5 text-[15px] font-semibold tracking-[-0.015em] text-ink" href="/">
+          {/* Brand mark: a hairline square holding one solid grain. */}
+          <span aria-hidden="true" className="grid size-4 place-items-center border border-ink-muted">
+            <span className="size-1.5 bg-ink" />
+          </span>
+          <span data-dust-root="">{site.name}</span>
         </Link>
-        <nav className="hidden items-center gap-4 text-[13px] text-[#a1a1a1] md:flex">
-          {navItems.map((item) => (
+        <nav aria-label="Primary" className="flex items-center gap-0.5 text-[14px] text-ink-secondary">
+          {navLinks.map((item, index) => (
             <Link
-              className="transition-colors hover:text-[#e6e6e6]"
+              // Activity and Stack are in-page anchors; on a phone the two page-level links are enough.
+              className={`h-8 items-center px-2.5 transition-colors hover:bg-raised hover:text-ink ${
+                index === 1 || index === 2 ? "hidden md:inline-flex" : "inline-flex"
+              }`}
               href={item.href}
               key={item.href}
             >
@@ -32,25 +31,23 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          {headerLinks.map((link) => (
-            <a
-              aria-label={link.label}
-              className="inline-flex size-8 items-center justify-center rounded-md border border-[#2a2a2a] text-[#a1a1a1] transition-colors hover:border-[#444] hover:bg-[#1c1c1c] hover:text-[#e6e6e6]"
-              href={link.href}
-              key={link.href}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {link.label === "GitHub" ? (
-                <GitHubMark className="size-3.5" />
-              ) : link.label === "Telegram" ? (
-                <TelegramMark className="size-3.5" />
-              ) : (
-                <XMark className="size-3.5" />
-              )}
-            </a>
-          ))}
+        <div className="ml-auto flex items-center gap-2">
+          <div className="hidden items-center gap-2 lg:flex">
+            {iconLinks.map((link) => (
+              <a
+                aria-label={link.label}
+                className="inline-grid size-8 place-items-center border border-line text-ink-secondary transition-colors hover:border-line-strong hover:text-ink"
+                href={link.href}
+                key={link.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <SocialIcon className="size-4" label={link.label} />
+              </a>
+            ))}
+          </div>
+          <DustToggle />
+          <ThemeToggle />
         </div>
       </div>
     </header>

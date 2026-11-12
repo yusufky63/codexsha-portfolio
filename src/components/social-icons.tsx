@@ -40,3 +40,9 @@ export function TelegramMark({ className }: IconProps) {
     </svg>
   );
 }
+
+export function SocialIcon({ label, className }: IconProps & { label: string }) {
+  if (label === "GitHub") return <GitHubMark className={className} />;
+  if (label === "Telegram") return <TelegramMark className={className} />;
+  return <XMark className={className} />;
+}

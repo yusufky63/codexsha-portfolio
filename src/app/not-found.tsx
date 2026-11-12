@@ -1,34 +1,42 @@
-import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
+import { Wordmark } from "@/components/dust/wordmark";
+import { ButtonLink } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false }
+};
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-[#121212]">
-      <SiteHeader />
-      <div className="mx-auto flex min-h-[calc(100vh-52px)] max-w-[720px] flex-col justify-center px-4 py-12 md:px-6">
-        <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-[#6f6f6f]">
-          404
-        </p>
-        <h1 className="mt-3 text-[32px] font-medium text-[#e6e6e6]">
+    <main className="mx-auto max-w-[1320px] px-4 md:px-7">
+      <section className="pt-10 md:pt-16">
+        <p className="eyebrow" data-dust-root="">
+          <span className="n">Error</span>
           Page not found
-        </h1>
-        <p className="mt-3 text-sm leading-6 text-[#a1a1a1]">
-          This route is not part of the compact portfolio index. The current v1
-          only exposes detail pages for the four flagship projects.
         </p>
-        <div className="mt-5 flex gap-2">
-          <Button href="/" variant="primary">
-            Home
-          </Button>
-          <Link
-            className="inline-flex h-9 items-center rounded-md border border-[#343434] px-3 text-[13px] text-[#a1a1a1] transition-colors hover:border-[#4a4a4a] hover:bg-[#202020] hover:text-[#e6e6e6]"
-            href="/#projects"
-          >
-            Projects
-          </Link>
+        <div className="mt-6">
+          <Wordmark as="p" text="404" />
         </div>
-      </div>
+        <div className="mt-8 grid gap-6 border-t border-line pt-6 md:grid-cols-12">
+          <h1 className="display-medium text-[26px] leading-[1.12] text-ink md:col-span-7 md:text-[38px]" data-dust-root="">
+            Nothing has settled at this address.
+          </h1>
+          <div className="md:col-span-4 md:col-start-9">
+            <p className="text-[15px] text-ink-secondary" data-dust-root="">
+              The link may be old, or the project may have been renamed. The index lists everything that exists.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-4">
+              <ButtonLink href="/projects" variant="primary">
+                Open the index
+                <ArrowRight strokeWidth={1.75} />
+              </ButtonLink>
+              <ButtonLink href="/">Home</ButtonLink>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

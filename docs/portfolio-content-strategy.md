@@ -1,5 +1,20 @@
 # Codexsha Portfolio Content Strategy
 
+## Current state (November 2026)
+
+The site was rebuilt around a single visual idea (see `docs/design-system.md`) and now covers more than the original Web3 scope. The positioning and tone below still apply; the structure and the project list do not.
+
+- Positioning line: product builder across onchain products, Farcaster mini apps, desktop tools and browser extensions.
+- Home page order: hero, pinned (most recent additions), flagship, games, index of everything else, GitHub activity, stack, contact.
+- Flagship, chosen by the owner: zkCodex, BStocks, BasePlay, Downpipe, ReClaim Cleaner.
+- Groups say what a project is: Apps & extensions, Games, Onchain, Mini apps, AI & tools, plus an archive of public repositories without a case study. There is no "Products" group: it was a leftover of the first site's featured four and had no criterion of its own. Flagship is a hand-picked list across the groups.
+- The archive lists only repositories with a real README. Old exercises, boilerplate and repositories without a README were removed at the owner's request.
+- BasePlay is no longer described as private: its repository is public.
+- Case study copy for the desktop, extension and onchain projects is taken from each repository's README. Nothing is stated that the README or manifest does not say.
+- The games come from private repositories at the owner's request: they are described by what they do and link to their store pages, never to the repository. Other private repositories are still not listed. Legacy trackers and forks stay out.
+- Each group has one hue, used wherever a project of that group is shown.
+- Project data lives in `src/data/*.ts`; the sections below are kept as the original brief.
+
 ## Goal
 
 Build a professional portfolio that positions Yusuf as a Web3 product builder with strong execution across Base, Farcaster Mini Apps, wallet analytics, on-chain games, AI-powered creator tools, and mobile consumer products.
